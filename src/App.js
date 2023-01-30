@@ -2,6 +2,7 @@ import React, { Component } from'react';
 import './App.css';
 
 function App() {
+
   return (
     
     <div className="App">
@@ -18,7 +19,7 @@ function App() {
 
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link" href="#">Login</a>
+              <a className="nav-link" href="http://localhost:3001/login">Login</a> 
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">Join</a> 
