@@ -30,4 +30,6 @@ module.exports = {
   port: parseInt(process.env.PORT ?? "3000", 10),
 
   mongoDBUri: process.env.MONGODB_URI,
+
+  admin: process.env.ADMIN,
 };

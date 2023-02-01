@@ -21,10 +21,20 @@ const userService = {
     return loginUser;
   },
 
-  async configUser({email}) {
-    const configUser = await userDAO.findConfig({email});
+  async configUser({shortId}) {
+    const configUser = await userDAO.findConfig({shortId});
     return configUser;
-  }
+  },
+
+  async editUser({shortId, email, name, password, address}) {
+    const editUser = await userDAO.editUser({shortId, email, name, password, address});
+    return editUser;
+
+  },
+
+  async deleteUser({shortId}) {
+    await userDAO.deleteUser({shortId})
+  },
 
 
 };

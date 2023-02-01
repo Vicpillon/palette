@@ -45,7 +45,10 @@ const checkCompleteUserFrom = (from) => (req, res, next) => {
 
 const checkUserFrom = (from) => (req, res, next) => {
   const { email, password } = req[from];
-  if (email === undefined) {
+  if(req.user) {
+    throw new Error("이미 로그인 중입니다.")
+  }
+  if (!email) {
     next(
       new AppError(
         commonErrors.inputError,
@@ -54,7 +57,7 @@ const checkUserFrom = (from) => (req, res, next) => {
       )
     );
   }
-  if (password === undefined) {
+  if (!password) {
     next(
       new AppError(
         commonErrors.inputError,

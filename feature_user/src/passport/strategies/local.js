@@ -13,10 +13,8 @@ const local = new LocalStrategy(config, async (email, password, done) => {
     if (!user) {
       throw new Error('회원을 찾을 수 없습니다.');
     }
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = bcrypt.hashSync(password, salt)
-    if (!bcrypt.compareSync(password, hashedPassword)) {
-      throw new Error('비밀번호가 일치하지 않습니다.');
+    if (!bcrypt.compareSync(password, user.password)) {
+      throw new Error("비밀번호가 일치하지 않습니다.");
     }
 
     done (null, {
