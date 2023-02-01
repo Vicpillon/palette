@@ -1,18 +1,11 @@
 const { userService } = require("../service");
-const bcrypt = require('bcrypt');
 const util = require('../misc/util')
-const config = require("../config");
+const bcrypt = require('bcrypt');
 
 const userController = {
 
   async configAdminUser(req, res, next) {
     try {
-      if(!req.user) {
-        throw new Error("로그인되어있지 않습니다.")
-      }
-      if(req.user._id !== config.admin) {
-        throw new Error("관리자 계정이 아닙니다.")
-      }
       const data = await userService.listUser()
       res.json(util.buildResponse(data));
     }
@@ -23,17 +16,11 @@ const userController = {
   
   async editAdminUser(req, res, next) {
     try {
-      if(!req.user) {
-        throw new Error("로그인되어있지 않습니다.")
-      }
-      if(req.user._id !== config.admin) {
-        throw new Error("관리자 계정이 아닙니다.")
-      }
       const {userId} = req.params;
-      const data = await userService.configUser({_id:userId});
       const {email, name, password, address} = req.body;
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = bcrypt.hashSync(password, salt)
+      const hashedPassword = bcrypt.hashSync(password, 10)
+
+      const data = await userService.configUser({_id:userId});
       const {_id} = data;
       await userService.editUser({_id, email, name, password:hashedPassword, address});
       const user = await userService.configUser({_id})
@@ -46,12 +33,6 @@ const userController = {
 
   async deleteAdminUser(req, res, next) {
     try {
-      if(!req.user) {
-        throw new Error("로그인되어있지 않습니다.")
-      }
-      if(req.user._id !== config.admin) {
-        throw new Error("관리자 계정이 아닙니다.")
-      }
       const {userId} = req.params;
       await userService.deleteUser({_id:userId});
       const text = "계정 탈퇴가 완료되었습니다."
@@ -74,28 +55,12 @@ const userController = {
     }
   },
 
-  async loginUser(req, res, next) {
-    try {
-      const { email, password } = req.body;
-      const user = await userService.loginUser(email, password);
-      res.json(util.buildResponse(user));
-    }
-    catch(err) {
-      next(err)
-    }
-  },
-
   async logoutUser(req, res, next) {
     try{
-        if(req.user) {
-          req.logout(() => {
-          res.cookie('token', null, {maxAge: 0,})
-          res.send("로그아웃되었습니다.")
-          });
-        }
-        else {
-          res.send("로그인되어있지 않습니다.")
-        }
+        req.logout(() => {
+        res.cookie('token', null, {maxAge: 0,})
+        res.send("로그아웃되었습니다.")
+        });
     }
     catch(err) {
       next(err)
@@ -104,9 +69,7 @@ const userController = {
   
   async configUser(req, res, next) {
     try {
-      if(!req.user) {
-        throw new Error("로그인되어있지 않습니다.")
-      }
+
       const {_id} = req.user;
       const user = await userService.configUser({_id});
       res.json(util.buildResponse(user));
@@ -119,9 +82,6 @@ const userController = {
 
   async editUser (req, res, next) {
     try{
-      if(!req.user) {
-        throw new Error("로그인되어있지 않습니다.")
-      }
       const {email, name, password, address} = req.body;
       const {_id} = req.user;
       const hashedPassword = bcrypt.hashSync(password, 10)
@@ -136,9 +96,6 @@ const userController = {
 
   async deleteUser (req, res, next) {
     try {
-      if(!req.user) {
-        throw new Error("로그인되어있지 않습니다.")
-      }
       const {_id} = req.user;
       await userService.deleteUser({_id});
       req.logout(() => {

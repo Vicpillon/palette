@@ -22,18 +22,22 @@ userRouter.post('/login',
 );
 
 userRouter.get('/logout', 
+  userMiddleware.validateUser,
   userController.logoutUser
 );
 
 userRouter.get('/config',
+  userMiddleware.validateUser,
   userController.configUser
 );
 
 userRouter.put('/edit',
+  userMiddleware.validateUser,
   userController.editUser
 );
 
 userRouter.delete('/withdraw',
+  userMiddleware.validateUser,
   userController.deleteUser
 );
 

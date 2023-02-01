@@ -9,34 +9,12 @@ const userDAO = {
   async create({ email, name, password, address }) {
     const verifyEmail = await User.findOne({email:email});
     if(!verifyEmail) {
-      const check = /\S+@\S+\.\S+/;
-      if(!check.test(email)) {
-        throw new Error("이메일 형식이 아닙니다.")
-      }
       const user = await User.create({email, name, password, address})
       return user;
     }
     else {
       throw new Error("중복된 이메일입니다.")
     }
-  },
-
-  async findUser(email, password) {
-    const user = await User.find({email:email});
-    const check = /\S+@\S+\.\S+/;
-    if(!check.test(email)) {
-      throw new Error("이메일 형식이 아닙니다.")
-    }
-    if(!user) {
-      throw new Error("회원을 찾지 못했습니다.")
-    }
-    if(user.password === password) {
-      return user;
-    }
-    else {
-      throw new Error("비밀번호가 다릅니다.")
-    }
-
   },
 
   async findConfig({_id}) {

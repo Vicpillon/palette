@@ -16,11 +16,6 @@ const userService = {
     return createdUser;
   },
 
-  async loginUser(email, password) {
-    const loginUser = await userDAO.findUser(email, password);
-    return loginUser;
-  },
-
   async configUser({_id}) {
     const configUser = await userDAO.findConfig({_id});
     return configUser;
@@ -35,7 +30,6 @@ const userService = {
   async deleteUser({_id}) {
     await userDAO.deleteUser({_id})
   },
-
 
 };
 
