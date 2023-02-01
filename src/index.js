@@ -28,6 +28,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {/* <App /> */}
+    {/* AppLayout 으로 모든 라우터 페이지를 감싸놨다. */}
       <AppLayout>
         <RouterProvider router={router} />
       </AppLayout>

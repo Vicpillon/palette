@@ -1,42 +1,52 @@
-.shop {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.header {
-  width: 100%;
-  background-color: lightblue;
-  padding: 20px;
-  text-align: center;
-}
-
-.navbar {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: rgb(243, 175, 223);
-  padding: 10px;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  margin: 0;
-  padding: 0;
-}
-
-.main-content {
-  width: 80%;
-  text-align: center;
-  padding: 20px;
-}
-
-.footer {
-  width: 100%;
-  background-color: lightgray;
-  padding: 20px;
-  text-align: center;
-}
+.meinLogo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .navbar {
+        display: flex;
+      }
+      .navbar-list {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+      .navbar-item {
+        margin-right: 20px;
+      }
+      .navbar-link {
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+      }
+      .body {
+        margin-top: 50px;
+        text-align: center;
+      }
+      .welcome-title {
+        font-size: 36px;
+        font-weight: bold;
+      }
+      .welcome-text {
+        font-size: 18px;
+        margin-top: 20px;
+        max-width: 500px;
+      }
+      .footer {
+        margin-top: 50px;
+        font-size: 14px;
+        color: gray;
+        text-align: center;
+      }

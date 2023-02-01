@@ -3,9 +3,27 @@ import './App.css'
 
 const AppHeader = () => {
   return (
-    <header className="header">
-      <h1>8lette</h1>
-    </header>
-  );
+    <div className="mainLogo">
+      <header className="header">
+        <h1 className="logo">8lette로고</h1>
+        <nav className="navbar">
+          <ul className="navbar-list">
+            <li className="navbar-item">
+              <a href="#" className="navbar-link">Category</a>
+            </li>
+            <li className="navbar-item">
+              <a href="#" className="navbar-link">Users</a>
+            </li>
+            <li className="navbar-item">
+              <a href="#" className="navbar-link">Login</a>
+            </li>
+            <li className="navbar-item">
+              <a href="#" className="navbar-link">Join</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+  )
 };
 export default AppHeader;
