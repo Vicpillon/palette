@@ -6,18 +6,6 @@ const { setUserToken } = require('../misc/util');
 
 const userRouter = express.Router();
 
-userRouter.get('/admin',
-  userController.configAdminUser
-);
-
-userRouter.put('/admin/:userId',
-  userController.editAdminUser
-);
-
-userRouter.delete('/admin/:userId',
-  userController.deleteAdminUser
-);
-
 userRouter.post('/add',
   userMiddleware.checkCompleteUserFrom("body"),
   userController.addUser
@@ -29,6 +17,7 @@ userRouter.post('/login',
   {
     setUserToken(res, req.user)
     res.json(req.user);
+    // res.redirect('/Landing');
   }
 );
 

@@ -21,19 +21,19 @@ const userService = {
     return loginUser;
   },
 
-  async configUser({shortId}) {
-    const configUser = await userDAO.findConfig({shortId});
+  async configUser({_id}) {
+    const configUser = await userDAO.findConfig({_id});
     return configUser;
   },
 
-  async editUser({shortId, email, name, password, address}) {
-    const editUser = await userDAO.editUser({shortId, email, name, password, address});
+  async editUser({_id, email, name, password, address}) {
+    const editUser = await userDAO.editUser({_id, email, name, password, address});
     return editUser;
 
   },
 
-  async deleteUser({shortId}) {
-    await userDAO.deleteUser({shortId})
+  async deleteUser({_id}) {
+    await userDAO.deleteUser({_id})
   },
 
 

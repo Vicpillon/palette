@@ -22,7 +22,7 @@ const userDAO = {
   },
 
   async findUser(email, password) {
-    const user = await User.findOne({email:email});
+    const user = await User.find({email:email});
     const check = /\S+@\S+\.\S+/;
     if(!check.test(email)) {
       throw new Error("이메일 형식이 아닙니다.")
@@ -39,18 +39,18 @@ const userDAO = {
 
   },
 
-  async findConfig({shortId}) {
-    const user = await User.findOne({shortId:shortId});
+  async findConfig({_id}) {
+    const user = await User.findOne({_id:_id});
     return user;
   },
   
-  async editUser({shortId, email, name, password, address}) {
-    const user = await User.findOneAndUpdate({shortId:shortId},{email:email, name:name, password:password, address:address});
+  async editUser({_id, email, name, password, address}) {
+    const user = await User.findOneAndUpdate({_id:_id},{email:email, name:name, password:password, address:address});
     return user;
   },
 
-  async deleteUser({shortId}) {
-    await User.deleteOne({shortId:shortId})
+  async deleteUser({_id}) {
+    await User.deleteOne({_id:_id})
   },
 
 };
