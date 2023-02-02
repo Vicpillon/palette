@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./styles/appfooter.css"
 const AppFooter = () => {
   return (
     <footer className="footer">
@@ -8,3 +8,4 @@ const AppFooter = () => {
   );
 };
 export default AppFooter
+

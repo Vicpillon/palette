@@ -6,21 +6,21 @@ import reportWebVitals from './reportWebVitals';
 
 //* 2)라우터 불러오기
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import About from "./pages/About";
-import Shop from "./pages/Shop";
-import AppLayout from "./components/common/AppLayout";
+import Category from "./pages/category";
+import Admin from "./pages/admin";
+import AppLayout from "./components/main/applayout";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
   },
   {
-    path: "/about",
-    element: <About />,
+    path: "/category",
+    element: <Category />,
   },
   {
-    path: "/shop",
-    element: <Shop />,
+    path: "/admin",
+    element: <Admin />,
   },
 ]);
 
