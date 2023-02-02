@@ -2,6 +2,7 @@ const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 const Joi = require('joi');
 const config = require('../config');
+const jwt = require('jsonwebtoken');
 
 
 const checkCompleteUserFrom = (from) => async (req, res, next) => {
@@ -97,15 +98,17 @@ const validateAdmin  = (req, res, next) => {
   next();
 };
 
-
-const checkMinPostConditionFrom = (from) => (req, res, next) => {
-  const { title, content, author } = req[from];
-  if (title === undefined && content === undefined && author === undefined) {
+const verifyUser = (req, res, next) => {
+  try {
+    jwt.verify(req.cookies.token, process.env.SECRET)
+    res.json(req.cookies.token)
+  }
+  catch (err) {
     next(
       new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: title, content, author중 최소 하나는 필요합니다.`
+        commonErrors.jsonWebTokenError,
+        500,
+        `JWT 토큰이 만료되었거나 없습니다.`
       )
     );
   }
@@ -119,5 +122,5 @@ module.exports = {
   checkUserFrom,
   validateUser,
   validateAdmin,
-  checkMinPostConditionFrom,
+  verifyUser
 };

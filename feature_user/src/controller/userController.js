@@ -2,6 +2,7 @@ const { userService } = require("../service");
 const util = require('../misc/util')
 const bcrypt = require('bcrypt');
 
+
 const userController = {
 
   async configAdminUser(req, res, next) {
@@ -18,12 +19,9 @@ const userController = {
     try {
       const {userId} = req.params;
       const {email, name, password, address, phoneNumber} = req.body;
-      const hashedPassword = bcrypt.hashSync(password, 10)
-
-      const data = await userService.configUser({_id:userId});
-      const {_id} = data;
+      const hashedPassword = password ? bcrypt.hashSync(password, 10) : password;
       await userService.editUser({_id, email, name, password:hashedPassword, address, phoneNumber});
-      const user = await userService.configUser({_id})
+      const user = await userService.configUser({_id:userId})
       res.json(util.buildResponse(user));
     }
     catch(err) {
@@ -84,7 +82,7 @@ const userController = {
     try{
       const {email, name, password, address, phoneNumber} = req.body;
       const {_id} = req.user;
-      const hashedPassword = bcrypt.hashSync(password, 10)
+      const hashedPassword = password ? bcrypt.hashSync(password, 10) : password;
       await userService.editUser({_id, email, name, password:hashedPassword, address, phoneNumber});
       const user = await userService.configUser({_id})
       res.json(util.buildResponse(user));
@@ -106,8 +104,7 @@ const userController = {
     catch(err) {
       next(err)
     }
-  }
-
+  },
 
 };
 

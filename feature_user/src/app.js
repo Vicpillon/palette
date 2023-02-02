@@ -5,9 +5,8 @@ const config = require("./config");
 const AppError = require("./misc/AppError");
 const commonErrors = require("./misc/commonErrors");
 const apiRouter = require("./router");
-
+const session = require("express-session")
 const passport = require('passport'); 
-const getUserFromJwt = require('./passport/getUserFromJwt')
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
@@ -27,10 +26,20 @@ async function create() {
 
   expressApp.use(logger('dev'));
   expressApp.use(cookieParser());
+
+  expressApp.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
+  }))
+
   expressApp.use(passport.initialize());
+  expressApp.use(passport.session());
 
 
-  expressApp.use(getUserFromJwt)
+
+
+
   // Health check API
   expressApp.get("/health", (req, res, next) => {
     res.json({

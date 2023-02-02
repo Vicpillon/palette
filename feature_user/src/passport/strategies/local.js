@@ -19,7 +19,6 @@ const local = new LocalStrategy(config, async (email, password, done) => {
 
     done (null, {
       email: user.email,
-      name: user.name,
       _id: user._id,
     });
   } catch (err) {

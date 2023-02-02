@@ -12,6 +12,7 @@ const commonErrors = {
   resourceDuplicationError: `Resource Duplication Error`,
   remoteStorageError: `Remote Storage Error`,
   requestValidationError: `Request Validation Error`,
+  jsonWebTokenError: `jsonWebToken validation Error`,
 };
 
 module.exports = commonErrors;

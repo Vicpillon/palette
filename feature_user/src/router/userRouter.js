@@ -13,10 +13,9 @@ userRouter.post('/add',
 
 userRouter.post('/login', 
   userMiddleware.checkUserFrom("body"),
-  passport.authenticate('local', {session: false}), (req, res, next) => 
+  passport.authenticate('local'), (req, res, next) => 
   {
-    setUserToken(res, req.user)
-    res.json(req.user);
+    setUserToken(res, req.user);
     // res.redirect('/Landing');
   }
 );
@@ -39,6 +38,19 @@ userRouter.put('/edit',
 userRouter.delete('/withdraw',
   userMiddleware.validateUser,
   userController.deleteUser
+);
+
+userRouter.get('/verify',
+  userMiddleware.validateUser,
+  userMiddleware.verifyUser
+);
+
+userRouter.get('/reissuance',
+  userMiddleware.validateUser, (req, res, next) => 
+  {
+    setUserToken(res, req.user);
+    // res.redirect('/Landing');
+  }
 );
 
 module.exports = userRouter;
