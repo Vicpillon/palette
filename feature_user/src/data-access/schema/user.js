@@ -16,7 +16,11 @@ const userSchema = new Schema({
   address: {
     type: String,
     required:true,
-  }
+  },
+  phoneNumber: {
+    type: String,
+    required:true,
+  },
 }, {
   timestamps: true,
 });

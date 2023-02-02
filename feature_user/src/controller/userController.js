@@ -17,12 +17,12 @@ const userController = {
   async editAdminUser(req, res, next) {
     try {
       const {userId} = req.params;
-      const {email, name, password, address} = req.body;
+      const {email, name, password, address, phoneNumber} = req.body;
       const hashedPassword = bcrypt.hashSync(password, 10)
 
       const data = await userService.configUser({_id:userId});
       const {_id} = data;
-      await userService.editUser({_id, email, name, password:hashedPassword, address});
+      await userService.editUser({_id, email, name, password:hashedPassword, address, phoneNumber});
       const user = await userService.configUser({_id})
       res.json(util.buildResponse(user));
     }
@@ -46,12 +46,12 @@ const userController = {
 
   async addUser(req, res, next) {
     try {
-      const { email, name, password, address } = req.body;
+      const { email, name, password, address, phoneNumber } = req.body;
       const hashedPassword = bcrypt.hashSync(password, 10)
-      const user = await userService.createUser({ email, name, password:hashedPassword, address });
+      const user = await userService.createUser({ email, name, password:hashedPassword, address, phoneNumber });
       res.status(201).json(util.buildResponse(user));
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   },
 
@@ -82,10 +82,10 @@ const userController = {
 
   async editUser (req, res, next) {
     try{
-      const {email, name, password, address} = req.body;
+      const {email, name, password, address, phoneNumber} = req.body;
       const {_id} = req.user;
       const hashedPassword = bcrypt.hashSync(password, 10)
-      await userService.editUser({_id, email, name, password:hashedPassword, address});
+      await userService.editUser({_id, email, name, password:hashedPassword, address, phoneNumber});
       const user = await userService.configUser({_id})
       res.json(util.buildResponse(user));
     }

@@ -5,7 +5,7 @@ const config = require('../config');
 
 
 const checkCompleteUserFrom = (from) => async (req, res, next) => {
-  const { email, name, password, address } = req[from];
+  const { email, name, password, address, phoneNumber } = req[from];
 
   const schema = Joi.object({
     email: Joi.string()
@@ -16,18 +16,25 @@ const checkCompleteUserFrom = (from) => async (req, res, next) => {
     name: Joi.string()
              .required(),
     address: Joi.string()
-                .required()
+                .required(),
+    phoneNumber: Joi.string()
+                    .pattern(new RegExp('^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$'))
+                    .required()
   })
+
   try {
-    await schema.validateAsync({ email, name, password, address })
+    await schema.validateAsync({ email, name, password, address, phoneNumber })
   }
   catch(err) {
-    console.log(err)
+    const result = Object.entries(req[from]).reduce((map, [key, value]) => {
+      map += '['+key+':'+value+"]"+" ";
+      return map
+  }, '');
     next(
       new AppError(
         commonErrors.inputError,
         400,
-        `${from}: 유효한 데이터셋이 아닙니다.`
+        `${result}: 유효한 데이터셋이 아닙니다.`
       )
     );
   }
@@ -49,12 +56,15 @@ const checkUserFrom = (from) => async (req, res, next) => {
     await schema.validateAsync({ email, password })
   }
   catch(err) {
-    console.log(err)
+    const result = Object.entries(req[from]).reduce((map, [key, value]) => {
+      map += '['+key+':'+value+"]"+" ";
+      return map
+  }, '');
     next(
       new AppError(
         commonErrors.inputError,
         400,
-        `${from}: 유효한 데이터셋이 아닙니다.`
+        `${result}: 유효한 데이터셋이 아닙니다.`
       )
     );
   }
@@ -65,7 +75,7 @@ const validateUser  = (req, res, next) => {
   if (!req.user) {
     next(
       new AppError(
-        commonErrors.inputError,
+        commonErrors.authenticationError,
         400,
         `로그인되어있지 않습니다.`
       )
@@ -78,7 +88,7 @@ const validateAdmin  = (req, res, next) => {
   if (req.user._id !== config.admin) {
     next(
       new AppError(
-        commonErrors.inputError,
+        commonErrors.authorizationError,
         400,
         `관리자 계정이 아닙니다.`
       )

@@ -6,12 +6,13 @@ const userService = {
     return user;
   },
 
-  async createUser({ email, name, password, address }) {
+  async createUser({ email, name, password, address, phoneNumber }) {
     const createdUser = await userDAO.create({
       email,
       name,
       password,
       address,
+      phoneNumber,
     });
     return createdUser;
   },
@@ -21,8 +22,8 @@ const userService = {
     return configUser;
   },
 
-  async editUser({_id, email, name, password, address}) {
-    const editUser = await userDAO.editUser({_id, email, name, password, address});
+  async editUser({_id, email, name, password, address, phoneNumber}) {
+    const editUser = await userDAO.editUser({_id, email, name, password, address, phoneNumber});
     return editUser;
 
   },

@@ -6,10 +6,10 @@ const userDAO = {
     return users
   },
 
-  async create({ email, name, password, address }) {
+  async create({ email, name, password, address, phoneNumber }) {
     const verifyEmail = await User.findOne({email:email});
     if(!verifyEmail) {
-      const user = await User.create({email, name, password, address})
+      const user = await User.create({email, name, password, address, phoneNumber})
       return user;
     }
     else {
@@ -22,8 +22,8 @@ const userDAO = {
     return user;
   },
   
-  async editUser({_id, email, name, password, address}) {
-    const user = await User.findOneAndUpdate({_id:_id},{email:email, name:name, password:password, address:address});
+  async editUser({_id, email, name, password, address, phoneNumber}) {
+    const user = await User.findOneAndUpdate({_id:_id},{email:email, name:name, password:password, address:address, phoneNumber:phoneNumber});
     return user;
   },
 
