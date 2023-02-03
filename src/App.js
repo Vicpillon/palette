@@ -1,64 +1,85 @@
-import React, { Component } from'react';
-import './App.css';
+const http = require("http");
+const express = require("express");
+const loader = require("./loader");
+const config = require("./config");
+const AppError = require("./misc/AppError");
+const commonErrors = require("./misc/commonErrors");
+const apiRouter = require("./router");
 
-function App() {
-  return (
-    
-    <div className="App">
-      <header className="App-header">
-      <div>  
-        // Top 부분
-        // 브라우저명 , 팀 회의를 통해서 구체적인 판매상품과 쇼핑몰 이름 정해야함.
-        <title>팔레트 쇼핑</title>
-        
-        <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-          
-            <a className="navbar-brand" href="#">Shopping </a> 
-          
+async function create() {
+  // MongoDB에 연결
+  await loader.connectMongoDB();
 
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="#">Login</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Join</a> 
-              </li>
-               <li className="nav-item">
-                <a className="nav-link" href="#">Users</a> 
-              </li>
-          
-              // 아래의 코드는 추후 기능을 생각해서 작성.
-              <li className="nav-item dropdown"> 
-                <a className="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                  Dropdown link
-                </a>
-                <div className="function">
-                  <a className="new_function" href="#">Link 1</a>
-                  <a className="new_function" href="#">Link 2</a>
-                  <a className="new_function" href="#">Link 3</a>
-                </div>
-              </li>
-            </ul>
-        </nav>
+  console.log("express application을 초기화합니다.");
+  const expressApp = express();
 
+  expressApp.use(express.json());
 
+  // Health check API
+  expressApp.get("/health", (req, res, next) => {
+    res.json({
+      status: "OK",
+    });
+  });
 
-        // body 부분
-        <div className="product"></div>
-        <p>Index Page</p>
-    
+  // version 1의 api router를 등록
+  expressApp.use("/api/v1", apiRouter.v1);
 
-  
-        // Footer 부분
-        <div className="container">
-            <p>Contect us : Elice AI6</p>
-        </div>
-    </div>
-    
-    </header>
-  </div>
-  );
-  
+  // 해당되는 URL이 없을 때를 대비한 미들웨어
+  expressApp.use((req, res, next) => {
+    next(
+      new AppError(
+        commonErrors.resourceNotFoundError,
+        404,
+        "Resource not found"
+      )
+    );
+  });
+
+  // 에러 핸들러 등록
+  expressApp.use((error, req, res, next) => {
+    console.log(error);
+    res.statusCode = error.httpCode ?? 500;
+    res.json({
+      data: null,
+      error: error.message,
+    });
+  });
+  console.log("express application 준비가 완료되었습니다.");
+
+  // express와 http.Server을 분리해서 관리하기 위함.
+  const server = http.createServer(expressApp);
+
+  const app = {
+    start() {
+      server.listen(config.port);
+      server.on("listening", () => {
+        console.log(`🚀 쇼핑몰 서버가 포트 ${config.port}에서 운영중입니다.`);
+      });
+    },
+    stop() {
+      console.log("🔥 서버를 중지 작업을 시작합니다.");
+      this.isShuttingDown = true;
+      return new Promise((resolve, reject) => {
+        server.close(async (error) => {
+          if (error !== undefined) {
+            console.log(`- HTTP 서버 중지를 실패하였습니다: ${error.message}`);
+            reject(error);
+          }
+          console.log("- 들어오는 커넥션을 더 이상 받지 않도록 하였습니다.");
+          await loader.disconnectMongoDB();
+          console.log("- DB 커넥션을 정상적으로 끊었습니다.");
+          console.log("🟢 서버 중지 작업을 성공적으로 마쳤습니다.");
+          this.isShuttingDown = false;
+          resolve();
+        });
+      });
+    },
+    isShuttingDown: false,
+    _app: expressApp,
+  };
+
+  return app;
 }
 
-export default App;
+module.exports = create;
