@@ -1,3 +1,4 @@
+// 입구, 전역적인 설정
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -7,31 +8,32 @@ import reportWebVitals from './reportWebVitals';
 //* 2)라우터 불러오기
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Category from "./pages/category";
-import Admin from "./pages/admin";
-import AppLayout from "./components/main/applayout";
+import AppLayout from "./components/common/applayout.js";
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
   },
   {
-    path: "/admin",
-    element: <Admin />,
-  },
-  {
     path: "/category",
     element: <Category />,
   },
 ]);
-
+//id 값이 root 인 태그로 렌더링 되라. (public/index.js)에 id=root 있다.
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <App>
+      <RouterProvider router={router} />
+    </App>
+    {/* <App />
     {/* AppLayout 으로 모든 라우터 페이지를 감싸놨다. */}
-      <AppLayout>
-        <RouterProvider router={router} />
-      </AppLayout>
+    <AppLayout>
+      <RouterProvider router={router} />
+    </AppLayout>
   </React.StrictMode>
 );
 

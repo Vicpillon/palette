@@ -3,7 +3,7 @@ import AppFooter from "./appfooter";
 import AppHeader from "./appheader";
 
 const AppLayout = (props) => {
-  const { children } = props;
+  const { children } = props; 
   return (
     <div className="shop">
       <AppHeader />

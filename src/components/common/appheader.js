@@ -5,7 +5,9 @@ const AppHeader = () => {
   return (
     <div className="mainLogo">
       <header className="header">
-        <h1 className="logo">8lette</h1>
+        <h1 className="logo">
+          <a href="/">8lette</a>
+        </h1>
         <nav className="navbar">
           <ul className="navbar-list">
             <li className="navbar-item">
@@ -31,8 +33,10 @@ const AppHeader = () => {
             <li className="navbar-item">
               <a href="/admin" className="navbar-link">
                 admin
-              </a>;
-            </li>;
+              </a>
+              ;
+            </li>
+            ;
           </ul>
         </nav>
       </header>
