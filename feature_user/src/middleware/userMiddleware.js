@@ -3,7 +3,7 @@ const commonErrors = require("../misc/commonErrors");
 const Joi = require('joi');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
-
+const jwt_decode = require("jwt-decode");
 
 const checkCompleteUserFrom = (from) => async (req, res, next) => {
   const { email, name, password, address, phoneNumber } = req[from];
@@ -42,6 +42,8 @@ const checkCompleteUserFrom = (from) => async (req, res, next) => {
   next()
 };
 
+
+
 const checkUserFrom = (from) => async (req, res, next) => {
   const { email, password } = req[from];
 
@@ -72,42 +74,35 @@ const checkUserFrom = (from) => async (req, res, next) => {
   next();
 };
 
-const validateUser  = (req, res, next) => {
-  if (!req.user) {
-    next(
-      new AppError(
-        commonErrors.authenticationError,
-        400,
-        `로그인되어있지 않습니다.`
-      )
-    );
+
+
+const verifyAdmin  = (req, res, next) => {
+  const decode_token = jwt_decode(req.cookies.token)
+  const {role} = decode_token;
+  if (role) {
+    next();
+    return;
   }
-  next();
+  next(
+    new AppError(
+      commonErrors.authorizationError,
+      400,
+      `관리자 계정이 아닙니다.`
+    )
+  );
 };
 
-const validateAdmin  = (req, res, next) => {
-  if (req.user._id !== config.admin) {
-    next(
-      new AppError(
-        commonErrors.authorizationError,
-        400,
-        `관리자 계정이 아닙니다.`
-      )
-    );
-  }
-  next();
-};
+
 
 const verifyUser = (req, res, next) => {
   try {
     jwt.verify(req.cookies.token, process.env.SECRET)
-    res.json(req.cookies.token)
   }
   catch (err) {
     next(
       new AppError(
         commonErrors.jsonWebTokenError,
-        500,
+        401,
         `JWT 토큰이 만료되었거나 없습니다.`
       )
     );
@@ -116,11 +111,25 @@ const verifyUser = (req, res, next) => {
 };
 
 
+const existsToken = (req, res, next) => {
+  if(req.cookies.token) {
+    next(
+      new AppError(
+        commonErrors.inputError,
+        400,
+        `로그인되어 있습니다`
+      )
+    );
+    return;
+  }
+  next()
+}
+
 
 module.exports = {
   checkCompleteUserFrom,
   checkUserFrom,
-  validateUser,
-  validateAdmin,
-  verifyUser
+  verifyAdmin,
+  verifyUser,
+  existsToken
 };

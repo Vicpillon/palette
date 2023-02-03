@@ -18,6 +18,7 @@ async function connectMongoDB() {
     console.log(`Mongoose에서 에러가 발생하였습니다: ${error}`);
   });
 
+  mongoose.set('strictQuery', true);
   await mongoose.connect(config.mongoDBUri, {
     minPoolSize: 4, // min pool size 설정
     maxPoolSize: 20, // max pool size 설정

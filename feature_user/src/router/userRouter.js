@@ -13,6 +13,7 @@ userRouter.post('/add',
 
 userRouter.post('/login', 
   userMiddleware.checkUserFrom("body"),
+  userMiddleware.existsToken,
   passport.authenticate('local'), (req, res, next) => 
   {
     setUserToken(res, req.user);
@@ -21,36 +22,38 @@ userRouter.post('/login',
 );
 
 userRouter.get('/logout', 
-  userMiddleware.validateUser,
   userController.logoutUser
 );
 
 userRouter.get('/config',
-  userMiddleware.validateUser,
+  userMiddleware.verifyUser,
   userController.configUser
 );
 
 userRouter.put('/edit',
-  userMiddleware.validateUser,
+  userMiddleware.verifyUser,
   userController.editUser
 );
 
 userRouter.delete('/withdraw',
-  userMiddleware.validateUser,
+  userMiddleware.verifyUser,
   userController.deleteUser
 );
 
 userRouter.get('/verify',
-  userMiddleware.validateUser,
-  userMiddleware.verifyUser
-);
-
-userRouter.get('/reissuance',
-  userMiddleware.validateUser, (req, res, next) => 
-  {
-    setUserToken(res, req.user);
-    // res.redirect('/Landing');
+  userMiddleware.verifyUser,
+  (req, res, next) => {
+    res.json(req.cookies.token)
   }
 );
+
+// 토큰이 만료되면 로그아웃되기 때문에 재발급할 필요가 없음.
+// userRouter.get('/reissuance',
+//   userMiddleware.validateUser, (req, res, next) => 
+//   {
+//     setUserToken(res, req.user);
+//     // res.redirect('/Landing');
+//   }
+// );
 
 module.exports = userRouter;

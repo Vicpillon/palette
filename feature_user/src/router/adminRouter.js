@@ -4,20 +4,20 @@ const { userMiddleware } = require("../middleware");
 const adminRouter = express.Router();
 
 adminRouter.get('/',
-  userMiddleware.validateUser,
-  userMiddleware.validateAdmin,
+  userMiddleware.verifyUser,
+  userMiddleware.verifyAdmin,
   userController.configAdminUser
 );
 
 adminRouter.put('/:userId',
-  userMiddleware.validateUser,
-  userMiddleware.validateAdmin,
+  userMiddleware.verifyUser,
+  userMiddleware.verifyAdmin,
   userController.editAdminUser
 );
 
 adminRouter.delete('/:userId',
-  userMiddleware.validateUser,
-  userMiddleware.validateAdmin,
+  userMiddleware.verifyUser,
+  userMiddleware.verifyAdmin,
   userController.deleteAdminUser
 );
 

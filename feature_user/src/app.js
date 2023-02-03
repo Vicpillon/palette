@@ -9,7 +9,7 @@ const session = require("express-session")
 const passport = require('passport'); 
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
+require('./passport')();
 
 
 async function create() {
@@ -19,8 +19,7 @@ async function create() {
   console.log("express application을 초기화합니다.");
   const expressApp = express();
 
-  require('./passport')();
-  
+
   expressApp.use(express.json());
   expressApp.use(express.urlencoded({ extended: false }));
 

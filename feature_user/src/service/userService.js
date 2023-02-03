@@ -1,3 +1,7 @@
+// Business Layer : 어플리케이션의 비즈니스 기능을 담당, 어플리케이션의 중심.
+// Service, Domain
+
+
 const { userDAO } = require("../data-access");
 
 const userService = {

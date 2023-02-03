@@ -1,7 +1,12 @@
+// Presentation Layer : 사용자의 input을 주고 받는 것을 담당.
+// 사용자가와 가장 가깝게 위치. Controller
+
+
+
 const { userService } = require("../service");
 const util = require('../misc/util')
 const bcrypt = require('bcrypt');
-
+const jwt_decode = require("jwt-decode");
 
 const userController = {
 
@@ -20,7 +25,7 @@ const userController = {
       const {userId} = req.params;
       const {email, name, password, address, phoneNumber} = req.body;
       const hashedPassword = password ? bcrypt.hashSync(password, 10) : password;
-      await userService.editUser({_id, email, name, password:hashedPassword, address, phoneNumber});
+      await userService.editUser({_id:userId, email, name, password:hashedPassword, address, phoneNumber});
       const user = await userService.configUser({_id:userId})
       res.json(util.buildResponse(user));
     }
@@ -67,11 +72,10 @@ const userController = {
   
   async configUser(req, res, next) {
     try {
-
-      const {_id} = req.user;
+      const decode_token = jwt_decode(req.cookies.token)
+      const {_id} = decode_token;
       const user = await userService.configUser({_id});
       res.json(util.buildResponse(user));
-
     }
     catch(err) {
       next(err)
@@ -81,7 +85,8 @@ const userController = {
   async editUser (req, res, next) {
     try{
       const {email, name, password, address, phoneNumber} = req.body;
-      const {_id} = req.user;
+      const decode_token = jwt_decode(req.cookies.token)
+      const {_id} = decode_token;
       const hashedPassword = password ? bcrypt.hashSync(password, 10) : password;
       await userService.editUser({_id, email, name, password:hashedPassword, address, phoneNumber});
       const user = await userService.configUser({_id})
@@ -94,7 +99,8 @@ const userController = {
 
   async deleteUser (req, res, next) {
     try {
-      const {_id} = req.user;
+      const decode_token = jwt_decode(req.cookies.token)
+      const {_id} = decode_token;
       await userService.deleteUser({_id});
       req.logout(() => {
         res.cookie('token', null, {maxAge: 0,})

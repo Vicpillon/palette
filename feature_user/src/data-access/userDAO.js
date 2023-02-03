@@ -1,3 +1,9 @@
+// Persistence Layer : 영속성을 가져야하는 데이터를 관리.
+// 데이터 소스와 비즈니스 레이어 사이에서 데이터를 읽고 쓰는 것이 역할
+// 비즈니스에게 영속성 데이터를 제공하거나 받아서 처리함. DAO, Repository
+
+
+
 const { User } = require("./model");
 
 const userDAO = {
