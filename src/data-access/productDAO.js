@@ -1,23 +1,74 @@
 const { Product } = require("./model");
+const util = require("../misc/util");
 
 const productDAO = {
-  // 전체 상품 조회
-  async find() {
-    const products = await Product.find({});
-    return products;
+  async create({ name, price, summary, description, company, category, remaining, image }) {
+    const product = new Post({ name, price, summary, description, company, category, remaining, image });
+    await product.save();
+    return product.toObject();
   },
-  // 개별 상품 상세 조회
+
   async findOne(id) {
-    const product = await Product.findById(id).lean();
-    return product;
+    const plainProduct = await Product.findById(id).lean();
+    return plainProduct;
   },
-  // 상품 추가
-  async create({category, title, content}) {
-    const products = await Product.create({category, title, content})
-    return products
-  }
 
+  async findMany(filter) {
+    const sanitizedFilter = util.sanitizeObject({
+      name: filter.name,
+      price: filter.price,
+      summary: filter.summary,
+      description: filter.description,
+      company: filter.company,
+      category: filter.category,
+      remaining: filter.remaining,
+      image: filter.image
+    });
+    const plainProducts = await Product.find(sanitizedFilter).lean();
+    return plainProducts;
+  },
+
+  async updateOne(id, toUpdate) {
+    const sanitizedToUpdate = util.sanitizeObject({
+      name: toUpdate.name,
+      price: toUpdate.price,
+      summary: toUpdate.summary,
+      description: toUpdate.description,
+      company: toUpdate.company,
+      category: toUpdate.category,
+      remaining: toUpdate.remaining,
+      image: toUpdate.image
+    });
+    const plainUpdatedProduct = await Product.findByIdAndUpdate(
+      id,
+      sanitizedToUpdate,
+      {
+        runValidators: true,
+        new: true,
+      }
+    ).lean();
+    return plainUpdatedProduct;
+  },
+
+  async deleteOne(id) {
+    const plainDeletedProduct = await Product.findByIdAndDelete({ _id: id }).lean();
+    return plainDeletedProduct;
+  },
+
+  async deleteMany(condition) {
+    const sanitizedCondition = util.sanitizeObject({
+      name: condition.name,
+      price: condition.price,
+      summary: condition.summary,
+      description: condition.description,
+      company: condition.company,
+      category: condition.category,
+      remaining: condition.remaining,
+      image: condition.image
+    });
+    const plainDeletedProducts = await Product.deleteMany(sanitizedCondition).lean();
+    return plainDeletedProducts;
+  },
 };
-
 
 module.exports = productDAO;

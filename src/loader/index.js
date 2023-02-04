@@ -1,8 +1,8 @@
-// 외부 시스템과 커넥션을 맺어야 하거나 시작 데이터를 로딩해야 할 때 사용되는 셋업 코드
 const mongoose = require("mongoose");
 const config = require("../config");
 
 async function connectMongoDB() {
+
   mongoose.connection.on("connecting", () => {
     console.log("Mongoose가 MongoDB 서버에 연결중입니다!");
   });
@@ -18,6 +18,8 @@ async function connectMongoDB() {
   mongoose.connection.on("error", (error) => {
     console.log(`Mongoose에서 에러가 발생하였습니다: ${error}`);
   });
+
+  mongoose.set('strictQuery',true);
 
   await mongoose.connect(config.mongoDBUri, {
     minPoolSize: 4, // min pool size 설정

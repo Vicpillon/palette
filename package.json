@@ -1,22 +1,21 @@
 {
-  "name": "order-api",
+  "name": "8team",
   "version": "1.0.0",
-  "description": "테스트 MR입니다.\r # Getting Started with Create React App",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch 'bin/*' --watch 'src/*' bin/index.js "
+    "start": "nodemon --watch 'bin/*' --watch 'src/*' bin/index.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@kdt-gitlab.elice.io:ai_track/class_06/web_project/team08/8team_-project.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^6.9.0"
+    "joi": "^17.7.0",
+    "mongodb": "^5.0.0",
+    "mongoose": "^6.6.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

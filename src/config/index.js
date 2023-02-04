@@ -1,4 +1,3 @@
-// config - application 설정 코드
 const dotenv = require("dotenv");
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");

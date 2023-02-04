@@ -1,7 +1,9 @@
-const userMiddleware = require("./userMiddleware");
+const productMiddleware = require("./productMiddleware");
+const categoryMiddleware = require("./categoryMiddleware");
 const orderMiddleware = require("./orderMiddleware");
 
 module.exports = {
-  userMiddleware,
+  productMiddleware,
+  categoryMiddleware,
   orderMiddleware
 };
