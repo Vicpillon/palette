@@ -47,7 +47,7 @@ async function create() {
   });
 
   // version 1의 api router를 등록
-  expressApp.use("/api", apiRouter.v1);
+  expressApp.use("/api/v1", apiRouter.v1);
 
   // 해당되는 URL이 없을 때를 대비한 미들웨어
   expressApp.use((req, res, next) => {
