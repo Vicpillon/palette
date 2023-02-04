@@ -13,7 +13,7 @@ const setUserToken = (res, user) => {
   // 유저 jwt 토큰생성
   // 토큰을 쿠키로 전달
   const token = jwt.sign(user, process.env.SECRET, {expiresIn:600})
-  // expiresIn : 토큰에 대한 기한 "1d" "1h" 60*60(s) 60000:1minute
+  // expiresIn : 토큰에 대한 기한 "1d" "1h" 60*60(s) 60:1minute
   // const decode_token = jwt_decode(token)
 
   res.cookie('token', token, {maxAge:2628002880, httpOnly: true}).json(`jwtToken: ${token}`)
