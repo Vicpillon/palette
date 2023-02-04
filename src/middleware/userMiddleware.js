@@ -132,9 +132,3 @@ module.exports = {
   verifyUser,
   existsToken
 };
-
-module.exports = {
-  checkCompleteUserFrom,
-  checkUserFrom,
-  checkMinPostConditionFrom,
-};
