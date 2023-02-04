@@ -16,7 +16,7 @@ const setUserToken = (res, user) => {
   // expiresIn : 토큰에 대한 기한 "1d" "1h" 60*60(s) 60000:1minute
   // const decode_token = jwt_decode(token)
 
-  res.cookie('token', token, {maxAge:2628002880}).json(`jwtToken: ${token}`)
+  res.cookie('token', token, {maxAge:2628002880, httpOnly: true}).json(`jwtToken: ${token}`)
   // `${decode_token.role}`
   /* res.cookie('token', token, { httpOnly: false, sameSite:"None", maxAge: 30000(ms), secure: false }).json(token)
   maxAge : 쿠키에 대한 기한  
