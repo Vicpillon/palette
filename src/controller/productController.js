@@ -1,5 +1,4 @@
 const { productService } = require("../service");
-<<<<<<< HEAD
 const util = require("../misc/util");
 
 const productController = {
@@ -66,25 +65,3 @@ const productController = {
 };
 
 module.exports = productController;
-=======
-const util = require('../misc/util')
-
-const productController = {
-
-  async postProduct(req, res, next) {
-    const {category, title, content} = req.body;
-    const data = await productService.createProduct({category, title, content})
-    res.json(util.buildResponse(data));
-  },
-  
-  async getProduct(req, res, next) {
-    const data = await productService.listProduct()
-    res.json(util.buildResponse(data));
-  },
-
-};
-
-
-
-module.exports = productController;
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2

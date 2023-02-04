@@ -1,7 +1,6 @@
 const { productDAO } = require("../data-access");
 
 const productService = {
-<<<<<<< HEAD
   async createProduct({ name, price, summary, description, company, category, remaining, image }) {
     const createdProduct = await productDAO.create({
       name, 
@@ -12,24 +11,10 @@ const productService = {
       category,
       remaining, 
       image
-=======
-
-  async listProduct() {
-    const product = await productDAO.find({});
-    return product;
-  },
-
-  async createProduct({category, title, content}) {
-    const createdProduct = await productDAO.create({
-      category,
-      title,
-      content
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2
     });
     return createdProduct;
   },
 
-<<<<<<< HEAD
   async getProduct(id) {
     const product = await productDAO.findOne(id);
     return product;
@@ -57,8 +42,3 @@ const productService = {
 };
 
 module.exports = productService;
-=======
-};
-
-module.exports = productService;
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2

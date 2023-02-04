@@ -1,6 +1,5 @@
 const express = require("express");
 const { productController } = require("../controller");
-<<<<<<< HEAD
 const { productMiddleware } = require("../middleware");
 
 const productRouter = express.Router();
@@ -39,18 +38,3 @@ productRouter.delete(
 );
 
 module.exports = productRouter;
-=======
-
-
-const productRouter = express.Router();
-
-productRouter.post('/',
-  productController.postProduct
-);
-
-productRouter.get('/',
-  productController.getProduct
-);
-
-module.exports = productRouter;
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2

@@ -1,19 +1,15 @@
 const { orderDAO } = require("../data-access");
 
 const orderService = {
-
-  // async listOrder() {
-  //   const order = await orderDAO.find();
-  //   return order;
-  // },
   // 주문 생성
-  async createOrder({ productId, userId, totalPrice, address, status }) {
+  async createOrder({ productId, userId, totalPrice, address, status, quantity }) {
     const createdOrder = await orderDAO.create({
       productId,
       userId,
       totalPrice,
       address,
       status,
+      quantity,
     });
     return createdOrder;
   },
@@ -37,7 +33,13 @@ const orderService = {
     const updatedOrder = await orderDAO.updateOne(id, { address });
     return updatedOrder;
   },
-  // 주문 취소
+  // 관리자 주문상태 수정
+  async updateOrderAdmin(id, { address, productId, status }) {
+    const updatedOrderAdmin = await orderDAO.updateOneAdmin(id,  
+      { address, productId, status });
+      return updatedOrderAdmin;
+  },
+  // 주문 하나 취소
   async deleteOrder(id) {
     const deletedOrder = await orderDAO.deleteOne(id);
     return deletedOrder;

@@ -1,83 +1,66 @@
-const AppError = require("../misc/AppError");
-const commonErrors = require("../misc/commonErrors");
+// const AppError = require("../misc/AppError");
+// const commonErrors = require("../misc/commonErrors");
 
-const checkCompleteOrderFrom = (from) => (req, res, next) => {
-  const { productId, userId, totalPrice, address, phoneNumber } = req[from];
-  if (productId === undefined) {
-    next(
-      new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: productId는 필수값입니다.`
-      )
-    );
-  }
-  if (userId === undefined) {
-    next(
-      new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: userId는 필수값입니다.`
-      )
-    );
-  }
-  if (totalPrice === undefined) {
-    next(
-      new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: totalPrice는 필수값입니다.`
-      )
-    );
-  }
-  if (address === undefined) {
-    next(
-      new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: address는 필수값입니다.`
-      )
-    );
-  }
-  if (phoneNumber === undefined) {
-    next(
-      new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: phoneNumber는 필수값입니다.`
-      )
-    );
-  }
-  next();
-};
+// const checkCompleteOrderFrom = (from) => (req, res, next) => {
+//   const { productId, userId, totalPrice, address, status, quantity } = req[from];\
+//   const schema = Joi.object({
+//     //productId: Joi.string().required(),
+//     //userId: Joi.number().required(),
+//     totalPrice: Joi.number().max(30).required(),
+//     address: Joi.string().max(100).required(),
+//     status: Joi.string().required(),
+//     quantity: Joi.string().required()
+//   })
 
-const checkOrderIdFrom = (from) => (req, res, next) => {
-  const { id } = req[from];
-  if (id === undefined) {
-    next(
-      new AppError(commonErrors.inputError, 400, `${from}: id는 필수값입니다.`)
-    );
-  }
-  next();
-};
+//   try {
+//     await schema.validateAsync({
+//       productId, 
+//       userId, 
+//       totalPrice, 
+//       address, 
+//       status,
+//       quantity
+//     })
+//   } catch(error) {
+//     const result = Object.entries(req[form]).reduce((map, [key, value])=>{
+//         map += `[${key} : ${value}] `;
+//         return map;
+//     }, '');
+//     next(
+//         new AppError(commonErrors.inputError, 400, `${result}: 유효한 데이터 셋이 아닙니다.`)
+//     )
+//   }
 
-const checkMinOrderConditionFrom = (from) => (req, res, next) => {
-  const { title, content, author } = req[from];
-  if (title === undefined && content === undefined && author === undefined) {
-    next(
-      new AppError(
-        commonErrors.inputError,
-        400,
-        `${from}: title, content, author중 최소 하나는 필요합니다.`
-      )
-    );
-  }
-  next();
-};
 
-module.exports = {
-    checkCompleteOrderFrom,
-    checkOrderIdFrom,
-    checkMinOrderConditionFrom
+// };
 
-};
+// const checkOrderIdFrom = (from) => (req, res, next) => {
+//   const { id } = req[from];
+//   if (id === undefined) {
+//     next(
+//       new AppError(commonErrors.inputError, 400, `${from}: id는 필수값입니다.`)
+//     );
+//   }
+//   next();
+// };
+
+// const checkMinOrderConditionFrom = (from) => (req, res, next) => {
+//   const { title, content, author } = req[from];
+//   if (title === undefined && content === undefined && author === undefined) {
+//     next(
+//       new AppError(
+//         commonErrors.inputError,
+//         400,
+//         `${from}: title, content, author중 최소 하나는 필요합니다.`
+//       )
+//     );
+//   }
+//   next();
+// };
+
+// module.exports = {
+//     checkCompleteOrderFrom,
+//     checkOrderIdFrom,
+//     checkMinOrderConditionFrom
+
+// };

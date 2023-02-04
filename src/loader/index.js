@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-=======
-// 외부 시스템과 커넥션을 맺어야 하거나 시작 데이터를 로딩해야 할 때 사용되는 셋업 코드
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2
 const mongoose = require("mongoose");
 const config = require("../config");
 
 async function connectMongoDB() {
-<<<<<<< HEAD
   mongoose.set('strictQuery',true);
-=======
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2
   mongoose.connection.on("connecting", () => {
     console.log("Mongoose가 MongoDB 서버에 연결중입니다!");
   });

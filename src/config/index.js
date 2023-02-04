@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-// config - application 설정 코드
->>>>>>> b493113efb923d4e9a7a695044b57f1ba0b462a2
 const dotenv = require("dotenv");
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");

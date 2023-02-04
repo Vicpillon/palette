@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema(
         type: String,
         default: "배송준비중",
         required: true,
+    },
+    quantity: {
+        type: Number,
+        required: true,
     }
   }, {
         collection : "Order",
