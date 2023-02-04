@@ -1,0 +1,47 @@
+.meinLogo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .header {
+        background-color: pink; 
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .logo {
+        font-size: 40px;
+        font-weight: bold;
+      }
+      .navbar {
+        display: flex;
+      }
+      .navbar-list {
+        list-style: none;
+        display: flex;
+        margin: 10;
+        padding: 0;
+      }
+      .navbar-item {
+        margin-right: 20px;
+      }
+      .navbar-link {
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+      }
+      .body {
+        margin-top: 50px;
+        text-align: center;
+      }
+      .welcome-title {
+        font-size: 36px;
+        font-weight: bold;
+      }
+      .welcome-text {
+        font-size: 18px;
+        margin-top: 20px;
+        max-width: 500px;
+      }
