@@ -1,8 +1,3 @@
-// Presentation Layer : 사용자의 input을 주고 받는 것을 담당.
-// 사용자가와 가장 가깝게 위치. Controller
-
-
-
 const { userService } = require("../service");
 const util = require('../misc/util')
 const bcrypt = require('bcrypt');

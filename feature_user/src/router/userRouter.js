@@ -47,13 +47,4 @@ userRouter.get('/verify',
   }
 );
 
-// 토큰이 만료되면 로그아웃되기 때문에 재발급할 필요가 없음.
-// userRouter.get('/reissuance',
-//   userMiddleware.validateUser, (req, res, next) => 
-//   {
-//     setUserToken(res, req.user);
-//     // res.redirect('/Landing');
-//   }
-// );
-
 module.exports = userRouter;
