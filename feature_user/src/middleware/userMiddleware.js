@@ -1,7 +1,6 @@
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 const Joi = require('joi');
-const config = require('../config');
 const jwt = require('jsonwebtoken');
 const jwt_decode = require("jwt-decode");
 

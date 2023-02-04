@@ -1,7 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../../data-access/model');
 const bcrypt = require('bcrypt');
-const Config = require('../../config');
 
 const config = {
   usernameField: 'email',
@@ -17,7 +16,9 @@ const local = new LocalStrategy(config, async (email, password, done) => {
     if (!bcrypt.compareSync(password, user.password)) {
       throw new Error("비밀번호가 일치하지 않습니다.");
     }
-    const isAdmin = user._id.toString() === Config.admin;
+    const admin = await User.findOne({email:'admin@admin.com'});
+    
+    const isAdmin = user._id.toString() === admin._id.toString();
 
     done (null, {
       email: user.email,
