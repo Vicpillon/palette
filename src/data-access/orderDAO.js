@@ -2,13 +2,14 @@ const { Order } = require("./model");
 
 const orderDAO = {
   // 주문 생성
-  async create({ productId, userId, totalPrice, address, status }) {
+  async create({ productId, userId, totalPrice, address, status, quantity }) {
     const order = new Order({
       productId,
       userId,
       totalPrice,
       address,
       status,
+      quantity
     });
     await order.save();
     return order.toObject();
