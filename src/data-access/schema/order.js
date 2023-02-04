@@ -12,14 +12,9 @@ const orderSchema = new mongoose.Schema(
     },
 
     userId: {
-<<<<<<< HEAD
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-=======
         // type: mongoose.Schema.Types.ObjectId,
         // ref: "User",
         type: String,
->>>>>>> fa513838f6ba9bfb692109f403dbfd351a7c2adf
         required: true,
     },
     totalPrice: {
@@ -38,13 +33,10 @@ const orderSchema = new mongoose.Schema(
         type: String,
         default: "배송준비중",
         required: true,
-<<<<<<< HEAD
-=======
     },
     quantity: {
         type: Number,
         required: true,
->>>>>>> fa513838f6ba9bfb692109f403dbfd351a7c2adf
     }
   }, {
         collection : "Order",
