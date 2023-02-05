@@ -6,7 +6,7 @@ const userRouter = express.Router();
 
 // 회원가입
 userRouter.post(
-  "/add",
+  "/",
   userMiddleware.checkCompleteUserFrom("body"),
   userController.addUser
 );
