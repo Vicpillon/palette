@@ -5,9 +5,11 @@ const orderRouter = require("./orderRouter");
 const adminRouter = require("./adminRouter");
 const userRouter = require("./userRouter");
 const authRouter = require("./authRouter");
+const cors = require("cors");
 
 const v1Router = express.Router();
 
+v1Router.use(cors());
 v1Router.use("/products", productRouter);
 v1Router.use("/categories", categoryRouter);
 v1Router.use("/orders", orderRouter);
