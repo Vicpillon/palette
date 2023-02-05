@@ -7,8 +7,8 @@ import reportWebVitals from './reportWebVitals';
 
 //* 2)라우터 불러오기
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Category from "./pages/category";
-import AppLayout from "./components/common/applayout.js";
+import Category from "./pages/Category";
+import AppLayout from "./components/common/Applayout.js";
 
 
 
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/category",
+    path: "/Category",
     element: <Category />,
   },
 ]);
@@ -26,9 +26,6 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App>
-      <RouterProvider router={router} />
-    </App>
     {/* <App />
     {/* AppLayout 으로 모든 라우터 페이지를 감싸놨다. */}
     <AppLayout>
@@ -36,6 +33,8 @@ root.render(
     </AppLayout>
   </React.StrictMode>
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

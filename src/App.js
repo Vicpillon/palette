@@ -1,13 +1,15 @@
+import React from "react"
+// import Nav from "./components/common/AppNav"
+import MainPage from "./pages/Main/MainPage"
+// import Nav from "./components/common/Nav.js"
 import "./App.css";
 function App() {
   return (
     <div>
-      <div className="body">
-        <h2 className="welcome-title">상품리스트</h2>
-        <p className="welcome-text">리스트..</p>
-      </div>
+      {/* <Nav /> */}
+      <MainPage />
     </div>
-  );
+  )
 }
 
 export default App;

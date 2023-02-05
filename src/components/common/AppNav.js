@@ -1,13 +1,9 @@
-import React from "react";
-import "./styles/appheader.css";
+import React from 'react';
+import './styles/appheader.css'
 
-const AppHeader = () => {
-  return (
-    <div className="mainLogo">
-      <header className="header">
-        <h1 className="logo">
-          <a href="/">8lette</a>
-        </h1>
+const Nav = () =>{
+    return (
+      <div>
         <nav className="navbar">
           <ul className="navbar-list">
             <li className="navbar-item">
@@ -30,17 +26,11 @@ const AppHeader = () => {
                 Join
               </a>
             </li>
-            <li className="navbar-item">
-              <a href="/admin" className="navbar-link">
-                admin
-              </a>
-              ;
-            </li>
-            ;
           </ul>
         </nav>
-      </header>
-    </div>
-  );
+        ;
+      </div>
+    );
 };
-export default AppHeader;
+
+export default Nav;

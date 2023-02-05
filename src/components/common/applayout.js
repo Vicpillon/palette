@@ -1,6 +1,6 @@
 import React from "react";
-import AppFooter from "./appfooter";
-import AppHeader from "./appheader";
+import AppFooter from "./Appfooter";
+import AppHeader from "./Appheader";
 
 const AppLayout = (props) => {
   const { children } = props; 
@@ -16,5 +16,5 @@ const AppLayout = (props) => {
 
 export default AppLayout;
 
-// props의 children 이 AppLayout을 감싸고 있던 녀석들 
-//  1.Header, main, Footer 공통구조
+// // props의 children 이 AppLayout을 감싸고 있던 녀석들 
+// //  1.Header, main, Footer 공통구조

@@ -1,6 +1,5 @@
 import React from "react";
-import "./styles/appheader.css";
-
+import './styles/appheader.css'
 const AppHeader = () => {
   return (
     <div className="mainLogo">
@@ -8,6 +7,7 @@ const AppHeader = () => {
         <h1 className="logo">
           <a href="/">8lette</a>
         </h1>
+      </header>
         <nav className="navbar">
           <ul className="navbar-list">
             <li className="navbar-item">
@@ -30,16 +30,8 @@ const AppHeader = () => {
                 Join
               </a>
             </li>
-            <li className="navbar-item">
-              <a href="/admin" className="navbar-link">
-                admin
-              </a>
-              ;
-            </li>
-            ;
           </ul>
         </nav>
-      </header>
     </div>
   );
 };
