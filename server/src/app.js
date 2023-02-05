@@ -5,39 +5,37 @@ const config = require("./config");
 const AppError = require("./misc/AppError");
 const commonErrors = require("./misc/commonErrors");
 const apiRouter = require("./router");
-const session = require("express-session")
-const passport = require('passport'); 
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-require('./passport')();
-
+const session = require("express-session");
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
 async function create() {
   // MongoDB에 연결
-  await loader.connectMongoDB();
+  await loader.mongoDBLoader.connectMongoDB();
+
+  // passport 설정
+  loader.passportLoader();
 
   console.log("express application을 초기화합니다.");
   const expressApp = express();
 
-
   expressApp.use(express.json());
   expressApp.use(express.urlencoded({ extended: false }));
 
-  expressApp.use(logger('dev'));
+  expressApp.use(logger("dev"));
   expressApp.use(cookieParser());
 
-  expressApp.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true
-  }))
+  expressApp.use(
+    session({
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: true,
+    })
+  );
 
   expressApp.use(passport.initialize());
   expressApp.use(passport.session());
-
-
-
-
 
   // Health check API
   expressApp.get("/health", (req, res, next) => {
@@ -91,7 +89,7 @@ async function create() {
             reject(error);
           }
           console.log("- 들어오는 커넥션을 더 이상 받지 않도록 하였습니다.");
-          await loader.disconnectMongoDB();
+          await loader.mongoDBLoader.disconnectMongoDB();
           console.log("- DB 커넥션을 정상적으로 끊었습니다.");
           console.log("🟢 서버 중지 작업을 성공적으로 마쳤습니다.");
           this.isShuttingDown = false;
