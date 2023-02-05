@@ -1,12 +1,12 @@
 import React from "react"
-// import Nav from "./components/common/AppNav"
+import Nav from "./components/common/AppNav"
 import MainPage from "./pages/Main/MainPage"
-// import Nav from "./components/common/Nav.js"
+
 import "./App.css";
 function App() {
   return (
     <div>
-      {/* <Nav /> */}
+      <Nav />
       <MainPage />
     </div>
   )
