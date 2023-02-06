@@ -46,7 +46,6 @@ export default function Cart() {
                 return checked;
             })
         );
-        //임시저장공간 사용
         setAllChecked((prev) => !prev);
         checked ? setTotalPrice((prev) =>
             inCart.reduce((prev,item,index) => {
@@ -101,7 +100,8 @@ export default function Cart() {
                         width: '94%',
                         margin: '0 auto',
                     }}
-                >          <label style={choiceRightMargin30}>
+                >          
+                <label style={choiceRightMargin30}>
                 <input
                   type="checkbox"
                   style={choiceRightMargin10}
@@ -139,7 +139,7 @@ export default function Cart() {
                     </ul>
 
                         <div>
-                            결제 예정 금액 : {totalPrice}원
+                            결제 예정 금액 : {totalPrice }원
                         </div>
 
 

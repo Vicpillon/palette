@@ -3,7 +3,7 @@ import axios from 'axios';
 import Login from './routes/Login';
 
 
-export function Logout() {
+export default  function Logout() {
     const onClickHandler = () => {
 
         axios.get(`/api/users/logout`)

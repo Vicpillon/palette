@@ -8,7 +8,7 @@ const User = {
   "password":"adminadmin"
 }
 
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
 
   // 이메일이나 비밀번호가 없으면 회원가입 요청하기
@@ -29,7 +29,7 @@ function Login() {
   console.log(password);
 
   const ActiveIsPassedLogin = () => {
-    return email.includes("@") && password.length >= 5
+    return email.includes("@") && password.length >= 8
       ? setActive(true)
       : setActive(false);
   };
@@ -59,7 +59,7 @@ function Login() {
     }
   };
 
-  };
+  
 
   return (
     <>
@@ -104,6 +104,4 @@ function Login() {
       </section>
     </>
   );
-
-
-export default Login;
+};
