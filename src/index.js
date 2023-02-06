@@ -7,7 +7,7 @@ import Login from './routes/Login';
 import SignUp from './routes/SignUp';
 import Home from './App';
 
-
+console.log("Welcome");
 const router = createBrowserRouter([
   {
     path: "/",
