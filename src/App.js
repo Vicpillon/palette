@@ -1,14 +1,15 @@
 import React from "react"
+// import { Route, Routes } from "react-router";
 import Nav from "./components/common/AppNav"
-import MainPage from "./pages/Main/MainPage"
-
+import MainPage from "./pages/MainPage/MainPage"
 import "./App.css";
+
 function App() {
   return (
-    <div>
+    <>
       <Nav />
       <MainPage />
-    </div>
+    </>
   )
 }
 

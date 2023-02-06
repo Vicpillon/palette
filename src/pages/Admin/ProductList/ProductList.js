@@ -2,7 +2,7 @@ import React from "react";
 
 const Product = () => {
   const products = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 2; i++) {
     const product = (
       <li>
         <img src="" alt="Product" />

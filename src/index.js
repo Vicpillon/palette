@@ -7,26 +7,24 @@ import reportWebVitals from './reportWebVitals';
 
 //* 2)라우터 불러오기
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Category from "./pages/Category";
+import Category from "./pages/Category/Category.js";
 import AppLayout from "./components/common/Applayout.js";
-
-
+import Floral from "./pages/Category/CategoryList/Floral.js";
+import Woody from "./pages/Category/CategoryList/Woody.js";
+import Cotton from "./pages/Category/CategoryList/Cotton.js";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/Category",
-    element: <Category />,
-  },
+  {path: "/", element: <App />},
+  {path: "/category", element: <Category />},
+  {path: "/floral", element: <Floral/>},
+  {path: "/woody", element: <Woody/>},
+  {path: "/cotton", element: <Cotton/>}
 ]);
+
 //id 값이 root 인 태그로 렌더링 되라. (public/index.js)에 id=root 있다.
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <App />
     {/* AppLayout 으로 모든 라우터 페이지를 감싸놨다. */}
     <AppLayout>
       <RouterProvider router={router} />

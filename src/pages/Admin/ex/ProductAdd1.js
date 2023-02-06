@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-const ProductForm = () => {
+const ProductAdd = () => {
   const [productImage, setProductImage] = useState(null);
+  
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productCompany, setProductCompany] = useState("");
@@ -85,7 +86,7 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default ProductAdd;
 
 
 

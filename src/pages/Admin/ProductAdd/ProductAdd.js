@@ -31,6 +31,7 @@ const ProductAdd = () => {
       <p>
         <textarea placeholder="상세설명"></textarea>
       </p>
+      <button>등록하기</button>
     </>
   );
 };
