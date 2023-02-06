@@ -25,19 +25,19 @@ customAxios.interceptors.response.use(
   (err) => Promise.reject(err)
 );
 
-export const postApi = async (path: string, data: any) => {
-  return await customAxios.post(path, data);
-};
+// export const postApi = async (path: string, data: any) => {
+//   return await customAxios.post(path, data);
+// };
 
-export const getApi = async (path: string, params: any) => {
-  console.log({ path, params });
-  return await customAxios.get(path, { params });
-};
+// export const getApi = async (path: string, params: any) => {
+//   console.log({ path, params });
+//   return await customAxios.get(path, { params });
+// };
 
-export const putApi = async (path: string, data: any) => {
-  return await customAxios.put(path, data);
-};
+// export const putApi = async (path: string, data: any) => {
+//   return await customAxios.put(path, data);
+// };
 
-export const deleteApi = async (path: string, params: any) => {
-  return await customAxios.delete(path, { params });
-};
+// export const deleteApi = async (path: string, params: any) => {
+//   return await customAxios.delete(path, { params });
+// };
