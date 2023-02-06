@@ -27,7 +27,7 @@ const setUserToken = (res, user) => {
 
   res
     .cookie("token", token, { maxAge: 2628002880, httpOnly: true })
-    .json(`jwtToken: ${token}`);
+    .json(buildResponse(token));
   // `${decode_token.role}`
   /* res.cookie('token', token, { httpOnly: false, sameSite:"None", maxAge: 30000(ms), secure: false }).json(token)
   maxAge : 쿠키에 대한 기한  

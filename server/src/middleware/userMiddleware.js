@@ -7,9 +7,18 @@ const jwt_decode = require("jwt-decode");
 // 회원가입 스키마
 const signInSchema = Joi.object({
   email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+    .pattern(
+      new RegExp(
+        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-zA-Z]{2,3}$"
+      )
+    )
+    // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required(),
-  password: Joi.string().required(),
+  password: Joi.string()
+    .pattern(
+      new RegExp("^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])(?=.*?[A-Za-z]).{8,}$")
+    )
+    .required(),
   name: Joi.string().required(),
   address: Joi.string().required(),
   phoneNumber: Joi.string()
@@ -20,9 +29,18 @@ const signInSchema = Joi.object({
 // 로그인 스키마
 const loginSchema = Joi.object({
   email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+    .pattern(
+      new RegExp(
+        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-zA-Z]{2,3}$"
+      )
+    )
+    // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required(),
-  password: Joi.string().required(),
+  password: Joi.string()
+    .pattern(
+      new RegExp("^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])(?=.*?[A-Za-z]).{8,}$")
+    )
+    .required(),
 });
 
 // 회원가입에 필요한 값 체크

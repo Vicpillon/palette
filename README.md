@@ -51,3 +51,8 @@
 - authRouter 생성, 로그인 / 로그아웃 / 토큰 유효 검증 api 분리
 - userRouter api 경로 재설정
 - cors 추가
+
+# 2.6 사용자 관련 기능 10차
+
+- Joi password 스키마 수정
+- response 값 수정

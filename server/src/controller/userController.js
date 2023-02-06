@@ -39,8 +39,7 @@ const userController = {
     try {
       const { userId } = req.params;
       await userService.deleteUser({ _id: userId });
-      const text = "계정 탈퇴가 완료되었습니다.";
-      res.json(util.buildResponse(text));
+      res.json(util.buildResponse(`계정 탈퇴가 완료되었습니다.`));
     } catch (err) {
       next(err);
     }
@@ -67,7 +66,7 @@ const userController = {
     try {
       req.logout(() => {
         res.cookie("token", null, { maxAge: 0 });
-        res.send("로그아웃되었습니다.");
+        res.json(util.buildResponse(`로그아웃되었습니다.`));
       });
     } catch (err) {
       next(err);
@@ -115,7 +114,7 @@ const userController = {
       await userService.deleteUser({ _id });
       req.logout(() => {
         res.cookie("token", null, { maxAge: 0 });
-        res.send("회원 탈퇴가 완료되었습니다.");
+        res.json(util.buildResponse(`회원 탈퇴가 완료되었습니다.`));
       });
     } catch (err) {
       next(err);
