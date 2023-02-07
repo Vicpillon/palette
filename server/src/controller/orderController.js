@@ -1,85 +1,55 @@
-const { orderService } = require("../service");
 const util = require("../misc/util");
+const jwt_decode = require("jwt-decode");
+const { orderService } = require("../service");
 
 const orderController = {
-  // 주문 생성
-  async postOrder(req, res, next) {
+  // 사용자 주문 추가
+  async postOrderUser(req, res, next) {
     try {
-      const {
+      // 사용자 토큰 : email, password, _id, role
+      const decode_token = jwt_decode(req.cookies.token);
+      const { _id } = decode_token; // 현재 사용자의 _id
+      const data = req.body;
+      console.log(data);
+      const file = await orderService.createOrder(_id, data);
+      res.status(201).json(util.buildResponse(file));
+    } catch (error) {
+      next(error);
+    }
+  },
+  // 사용자 주문 내역 조회
+  async getOrderUser(req, res, next) {
+    try {
+      const { id } = req.params;
+      const file = await orderService.getOrder(id);
+      res.status(201).json(util.buildResponse(file));
+    } catch (error) {
+      next(error);
+    }
+  },
+  // 사용자 주문 수정
+  async putOrderUser(req, res, next) {
+    try {
+      const { id } = req.params; 
+      const { productId, userId, quantity, address, price } = req.body;
+      const file = await orderService.updateOrder(id, {
         productId,
         userId,
-        totalPrice,
-        address,
-        phoneNumber,
-        status,
         quantity,
-      } = req.body;
-      const order = await orderService.createOrder({
-        productId,
-        userId,
-        totalPrice,
         address,
-        phoneNumber,
-        status,
-        quantity,
+        price,
       });
-      res.status(201).json(util.buildResponse(order));
+      res.status(201).json(util.buildResponse(file));
     } catch (error) {
       next(error);
     }
   },
-  // 주문 하나 조회
-  async getOrder(req, res, next) {
+  // 사용자 주문 삭제
+  async deleteOrderUser(req, res, next) {
     try {
-      const { id } = req.params;
-      const order = await orderService.getOrder(id);
-      res.json(util.buildResponse(order));
-    } catch (error) {
-      next(error);
-    }
-  },
-  // 전체 주문 조회
-  async getOrders(req, res, next) {
-    try {
-      const filter = util.sanitizeObject(req.query);
-      const orders = await orderService.getPosts(filter);
-      res.json(util.buildResponse(orders));
-    } catch (error) {
-      next(error);
-    }
-  },
-  // 주문자 배송지 수정
-  async putOrder(req, res, next) {
-    try {
-      const { id } = req.params;
-      const { address } = req.body;
-      const order = await orderService.updateOrder(id, { address });
-      res.json(util.buildResponse(order));
-    } catch (error) {
-      next(error);
-    }
-  },
-  // 관리자 주문상태 수정
-  async putOrderAdmin(req, res, next) {
-    try {
-      const { id } = req.params;
-      const { address, productId, status } = req.body;
-      const order = await orderService.updateOrderAdmin(id, {
-        address,
-        productId,
-        status,
-      });
-      res.json(util.buildResponse(order));
-    } catch (error) {
-      next(error);
-    }
-  },
-  // 주문 하나 삭제
-  async deleteOrder(req, res, next) {
-    try {
-      const { id } = req.params;
-      const order = await orderService.deleteOrder(id);
-      res.json(util.buildResponse(order));
+      const { id } = req.params; 
+      const file = await orderService.deleteOrder(id);
+      res.status(201).json(util.buildResponse(file));
     } catch (error) {
       next(error);
     }

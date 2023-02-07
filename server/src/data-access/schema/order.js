@@ -6,8 +6,9 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {
     productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "Product",
+      type: String,
       required: true,
     },
 
@@ -22,10 +23,6 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     address: {
-      type: String,
-      required: true,
-    },
-    phoneNumber: {
       type: String,
       required: true,
     },
