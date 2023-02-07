@@ -16,7 +16,7 @@ productRouter.get(
   productController.getProduct
 );
 
-productRouter.get("/", productController.getProducts);
+productRouter.get("/", productController.getAllProducts);
 
 productRouter.put(
   "/:id",

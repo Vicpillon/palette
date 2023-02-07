@@ -2,8 +2,8 @@ const { Product } = require("./model");
 const util = require("../misc/util");
 
 const productDAO = {
-  async create({ name, price, summary, description, company, category, remaining, image }) {
-    const product = new Post({ name, price, summary, description, company, category, remaining, image });
+  async create({ name, price, summary, description, company, category, remaining, image, detailImage }) {
+    const product = new Product({ name, price, summary, description, company, category, remaining, image, detailImage });
     await product.save();
     return product.toObject();
   },
@@ -13,7 +13,7 @@ const productDAO = {
     return plainProduct;
   },
 
-  async findMany(filter) {
+  async findMany(filter, page, perPage) {
     const sanitizedFilter = util.sanitizeObject({
       name: filter.name,
       price: filter.price,
@@ -22,10 +22,32 @@ const productDAO = {
       company: filter.company,
       category: filter.category,
       remaining: filter.remaining,
-      image: filter.image
+      image: filter.image,
+      detailImage: filter.detailImage
     });
-    const plainProducts = await Product.find(sanitizedFilter).lean();
-    return plainProducts;
+    const [total, products] = await Promise.all([
+      Product.countDocuments({}),
+      Product.find(sanitizedFilter)
+        .lean()
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage),
+    ]);
+    const totalPage = Math.ceil(total / perPage);
+    return { products, total, totalPage };
+  },
+
+  async findAll(page, perPage) {
+    const [total, products] = await Promise.all([
+      Product.countDocuments({}),
+      Product.find()
+        .lean()
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage),
+    ]);
+    const totalPage = Math.ceil(total / perPage);
+    return { products, total, totalPage };
   },
 
   async updateOne(id, toUpdate) {
@@ -37,7 +59,8 @@ const productDAO = {
       company: toUpdate.company,
       category: toUpdate.category,
       remaining: toUpdate.remaining,
-      image: toUpdate.image
+      image: toUpdate.image,
+      detailImage: toUpdate.detailImage
     });
     const plainUpdatedProduct = await Product.findByIdAndUpdate(
       id,
@@ -64,7 +87,8 @@ const productDAO = {
       company: condition.company,
       category: condition.category,
       remaining: condition.remaining,
-      image: condition.image
+      image: condition.image,
+      detailImage: condition.detailImage
     });
     const plainDeletedProducts = await Product.deleteMany(sanitizedCondition).lean();
     return plainDeletedProducts;
