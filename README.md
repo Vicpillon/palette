@@ -56,3 +56,7 @@
 
 - Joi password 스키마 수정
 - response 값 수정
+
+# 2.7 사용자 관련 기능 11차
+
+- Joi email 스키마 수정

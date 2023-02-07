@@ -9,7 +9,7 @@ const signInSchema = Joi.object({
   email: Joi.string()
     .pattern(
       new RegExp(
-        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-zA-Z]{2,3}$"
+        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-z]{2,3}$"
       )
     )
     // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
@@ -31,7 +31,7 @@ const loginSchema = Joi.object({
   email: Joi.string()
     .pattern(
       new RegExp(
-        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-zA-Z]{2,3}$"
+        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-z]{2,3}$"
       )
     )
     // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
