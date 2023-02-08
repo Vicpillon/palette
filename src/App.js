@@ -3,6 +3,7 @@ import MainPage from "./routes/MainPage";
 import Login from "./routes/Login";
 import Logout from "./routes/Logout";
 import SignUp from "./routes/SignUp";
+<<<<<<< HEAD
 import SignUpDone from "./routes/SignUpDone";
 import Appheader from "./common/Appheader";
 import { Nav,Container } from "react-bootstrap";
@@ -44,7 +45,22 @@ function App() {
       </Routes>
 
       </Container>
+=======
+import Cart from "./routes/Cart";
+
+export default function App() {
+  
+  return (
+    <div className="App">
+     <>
+       <Routes>
+         <Route path="/login" element={<Login />} />
+         <Route path="/logout" element={<Logout />} />
+         <Route path="/signup" element={<Signup />} />
+         <Route path="/cart" element={<Cart />} />
+       </Routes>
+     </>
+    </div>
+>>>>>>> 8d753a200ce77338ec10b8bd0d729315cafc4a73
   );
 }
-
-export default App;
