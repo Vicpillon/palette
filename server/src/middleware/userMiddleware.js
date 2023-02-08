@@ -3,6 +3,7 @@ const commonErrors = require("../misc/commonErrors");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
+const { User } = require("../data-access/model");
 
 // 회원가입 스키마
 const signInSchema = Joi.object({
@@ -133,10 +134,42 @@ const existsToken = (req, res, next) => {
   next();
 };
 
+const preventAdmin = (req, res, next) => {
+  const decode_token = jwt_decode(req.cookies.token);
+  const { role } = decode_token;
+  if (role) {
+    next(
+      new AppError(
+        commonErrors.authenticationError,
+        400,
+        `관리자 계정은 수정 혹은 삭제할 수 없습니다.`
+      )
+    );
+  }
+  next();
+};
+
+const prohibitModifyAdmin = (from) => async (req, res, next) => {
+  const { userId } = req[from];
+  const data = await User.findOne({ _id: userId });
+  if (data.email === "admin@admin.com") {
+    next(
+      new AppError(
+        commonErrors.authenticationError,
+        400,
+        `관리자 계정은 수정 혹은 삭제할 수 없습니다.`
+      )
+    );
+  }
+  next();
+};
+
 module.exports = {
   checkCompleteUserFrom,
   checkUserFrom,
   verifyAdmin,
   verifyUser,
   existsToken,
+  preventAdmin,
+  prohibitModifyAdmin,
 };

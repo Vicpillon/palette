@@ -16,6 +16,7 @@ adminRouter.put(
   "/:userId",
   userMiddleware.verifyUser,
   userMiddleware.verifyAdmin,
+  userMiddleware.prohibitModifyAdmin("params"),
   userController.editAdminUser
 );
 
@@ -24,6 +25,7 @@ adminRouter.delete(
   "/:userId",
   userMiddleware.verifyUser,
   userMiddleware.verifyAdmin,
+  userMiddleware.prohibitModifyAdmin("params"),
   userController.deleteAdminUser
 );
 

@@ -15,9 +15,19 @@ userRouter.post(
 userRouter.get("/", userMiddleware.verifyUser, userController.configUser);
 
 // 사용자 정보 수정
-userRouter.put("/", userMiddleware.verifyUser, userController.editUser);
+userRouter.put(
+  "/",
+  userMiddleware.verifyUser,
+  userMiddleware.preventAdmin,
+  userController.editUser
+);
 
 // 사용자 정보 삭제
-userRouter.delete("/", userMiddleware.verifyUser, userController.deleteUser);
+userRouter.delete(
+  "/",
+  userMiddleware.verifyUser,
+  userMiddleware.preventAdmin,
+  userController.deleteUser
+);
 
 module.exports = userRouter;
