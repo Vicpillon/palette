@@ -7,39 +7,51 @@ const orderDAO = {
     const userData = await User.findOne({ _id: _id });
     // _id.toString()
     const userDataId = userData._id.toString();
-
+    let orderList = [];
     //  처음 돌 때는 productId = "1"
     await Promise.all(
       data.map(async (item) => {
-        const { productId, status, quantity, price } = item;
-        await Order.create({
+        const { productId, status, quantity, price, phoneNumber } = item;
+        const file = await Order.create({
           productId,
           userId: userDataId,
           totalPrice: price * quantity,
           address: userData.address,
           status,
           quantity,
+          phoneNumber: userData.phoneNumber,
         });
+        orderList.push(file);
       })
     );
-    // 토큰에서 userId 추출
-    const free = await Order.find({ userId: _id }); // 조회
-    return free;
+    console.log(orderList);
+    return orderList;
   },
   // 사용자 주문 내역 조회
   async findOne(id) {
     const order = await Order.findById(id).lean();
     return order;
   },
-  async updateOne(id, { productId, userId, quantity, address, price }) {
-    const order = await Order.findByIdAndUpdate(id, {
-      productId: productId,
-      userId: userId,
-      quantity: quantity,
-      address: address,
-      totalPrice: price * quantity,
-    });
+  // 사용자 주문 내역 수정
+  async updateOne(id, { address }) {
+    const order = await Order.findByIdAndUpdate(id, { address: address });
     return order;
+  },
+  // 관리자 - 사용자 배송 상태 수정
+  async updateStatus(id, { status }) {
+    const updateStatus = await Order.findByIdAndUpdate(
+      id,
+      {
+        status: status,
+      },
+      { new: true }
+    );
+    return updateStatus;
+  },
+  // 관리자 - 사용자 주문 정보 조회
+  async find({}) {
+    const orders = await Order.find({});
+    return orders;
   },
   //사용자 주문 삭제
   async deleteOne(id) {

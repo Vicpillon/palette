@@ -11,16 +11,25 @@ const orderService = {
     const getOrder = await orderDAO.findOne(id);
     return getOrder;
   },
+  // 사용자 전체 주문 내역 조회
+  async getAllOrder() {
+    const getAllOrder = await orderDAO.find({});
+    return getAllOrder;
+  },
+  // 관리자 - 사용자 주문 정보 조회
+  async listOrder() {
+    const order = await orderDAO.find({});
+    return order;
+  },
   // 사용자 주문 수정
-  async updateOrder(id, { productId, userId, quantity, address, price }) {
-    const updatedOrder = await orderDAO.updateOne(id, {
-      productId,
-      userId,
-      quantity,
-      address,
-      price,
-    });
+  async updateOrder(id, { address }) {
+    const updatedOrder = await orderDAO.updateOne(id, { address });
     return updatedOrder;
+  },
+  // 관리자 - 사용자 배송 상태 수정
+  async updateOrderStatus(id, { status }) {
+    const updatedOrderStatus = await orderDAO.updateStatus(id, { status });
+    return updatedOrderStatus;
   },
   // 사용자 주문 삭제
   async deleteOrder(id) {
