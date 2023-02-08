@@ -4,17 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { useDispatch } from 'react-redux';
 
-<<<<<<< HEAD
 export default function Login() {
-  // const dispatch = useDispatch();
-=======
-const User = {
-  "email":"admin@admin.com",
-  "password":"adminadmin"
-}
-
-export default function Login() {
->>>>>>> 8d753a200ce77338ec10b8bd0d729315cafc4a73
   const navigate = useNavigate();
 
   // 이메일이나 비밀번호가 없으면 회원가입 요청하기
@@ -64,11 +54,6 @@ export default function Login() {
     }
   };
 
-<<<<<<< HEAD
-=======
-  
-
->>>>>>> 8d753a200ce77338ec10b8bd0d729315cafc4a73
   return (
     <>
       <section className="Login">
@@ -113,7 +98,3 @@ export default function Login() {
     </>
   );
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> 8d753a200ce77338ec10b8bd0d729315cafc4a73
