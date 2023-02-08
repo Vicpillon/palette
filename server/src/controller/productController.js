@@ -15,7 +15,7 @@ const productController = {
   async getProduct(req, res, next) {
     try {
       const { id } = req.params;
-      const product = await postService.getProduct(id);
+      const product = await productService.getProduct(id);
       res.json(util.buildResponse(product));
     } catch (error) {
       next(error);
@@ -41,6 +41,8 @@ const productController = {
 
       const { products, total, totalPage } = await productService.getAllProducts(page, perPage);
       res.json(util.buildResponse({ 
+        page: page,
+        perPage: perPage,
         totalPage: totalPage,
         productCount: total, 
         products 
@@ -65,7 +67,10 @@ const productController = {
     try {
       const { id } = req.params;
       const product = await productService.deleteProduct(id);
-      res.json(util.buildResponse(product));
+      res.status(201).json(util.buildResponse({
+        status: 201,
+        product
+      }));
     } catch (error) {
       next(error);
     }

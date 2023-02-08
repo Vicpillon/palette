@@ -20,14 +20,13 @@ categoryRouter.get(
 //카테고리 상품 목록 조회
 categoryRouter.get(
   "/products/:category",
-  // categoryMiddleware.checkCategoryIdFrom,
   categoryController.getProductsInCategory
 );
 //카테고리 수정
 categoryRouter.put(
   "/:id",
   categoryMiddleware.checkCategoryIdFrom("params"),
-  //categoryMiddleware.checkMinCategoryConditionFrom("body"),
+  categoryMiddleware.checkMinCategoryConditionFrom("body"),
   categoryController.putCategory
 );
 //카테고리 삭제

@@ -54,7 +54,10 @@ const categoryController = {
     try {
       const { id } = req.params;
       const category = await categoryService.deleteCategory(id);
-      res.json(util.buildResponse(category));
+      res.status(201).json(util.buildResponse({
+        status: 201,
+        category
+      }));
     } catch (error) {
       next(error);
     }
@@ -74,6 +77,8 @@ const categoryController = {
         perPage
       )
       res.json(util.buildResponse({
+        page: page,
+        perPage: perPage,
         totalPage: totalPage, 
         productCount: total,
         products

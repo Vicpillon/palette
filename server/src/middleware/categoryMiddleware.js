@@ -45,12 +45,27 @@ const checkCategoryIdFrom = (from) => (req, res, next) => {
   next();
 };
 
+const checkMinCategoryConditionFrom = (from) => (req, res, next) => {
+    const { title, description, image } = req[from];
+  
+    if (title === undefined && description === undefined && image === undefined) {
+      next(
+        new AppError(
+          commonErrors.inputError,
+          400,
+          `${from}: 값이 최소 하나는 필요합니다.`
+        )
+      );
+    }
+    next();
+  };
+
 //삭제하려는 카테고리 내 상품이 존재할 경우, 포함된 상품을 모두 삭제하거나 카테고리를 변경해야 한다.
 const checkRemainedProduct = (form) => async (req, res, next) => {
   const { title } = req[form];
 
   const products = productService.getProducts({ category: title });
-  if (products) {
+  if (products.name) {
     next(
       new AppError(
         commonErrors.inputError,
@@ -65,5 +80,6 @@ const checkRemainedProduct = (form) => async (req, res, next) => {
 module.exports = {
   checkCompleteCategoryFrom,
   checkCategoryIdFrom,
+  checkMinCategoryConditionFrom,
   checkRemainedProduct,
 };
