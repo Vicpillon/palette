@@ -1,61 +1,103 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
+// import customAxios from "../../config/customAxios";
+import { Regex } from "../components/Regex";
+import axios from "axios";
 
-function SignUp () {
-    const [name, setName] = useState(""); 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [address, setAddress] = useState("");
-
-
-    const onNameHandler = (e) => {
-        setName(e.currentTarget.value);
-    };
+const SignUp = () => {
+    const navigate = useNavigate();
     
-    
-    const onEmailHandler = (e) => {
-        setEmail(e.currentTarget.value);
-    };
+    const [Email, setEmail] = useState("");
+    const [Name, setName] = useState("");
+    const [Password, setPassword] = useState("");
+    const [ConfirmPassword, setConfirmPassword] = useState("");
+    const [PhoneNumber, setPhoneNumber] = useState("");
+    const [Address, setAddress] = useState("");
 
-    const onPasswordHandler = (e) => {
-        setPassword(e.currentTarget.value);
-    };
 
-    
-    const onConfirmPasswordHandler = (e) => {
-        setConfirmPassword(e.currentTarget.value);
-    };
-    
+    const onEmailHandler = (event) => {
+        setEmail(event.currentTarget.value);
+    }
+    const onNameHandler = (event) => {
+        setName(event.currentTarget.value);
+    }
+
+    const onPasswordHandler = (event) => {
+        setPassword(event.currentTarget.value);
+    } 
+    const onConfirmPasswordHandler = (event) => {
+        setConfirmPassword(event.currentTarget.value);
+    }
+
     const onPhoneNumberHandler = (e) => {
         setPhoneNumber(e.currentTarget.value);
     };
 
-    const onAdressHandler = (e) => {
+    const onAddressHandler = (e) => {
         setAddress(e.currentTarget.value);
     };
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async(e) => {
         e.preventDefault();
-        if(password !== confirmPassword){
-            return alert ("비밀번호가 틀립니다. 다시 확인해주세요.");
-        }
+  
+
+    if(!Regex(Email)){
+        return alert("이메일 형식을 확인해주세요.")
+    }else if(!Regex(Password)){
+        return alert("비밀번호 형식을 확인해주세요.")
+    }else if(!Regex(ConfirmPassword)){
+        return alert("비밀번호가 틀립니다.")
+    }else if(!Regex(PhoneNumber)){
+        return alert("휴대폰번호 형식을 확인해주세요.")
+    }else{
+        axios
+        .post("/signup",{
+            Name : Name,
+            Email : Email,
+            Password : Password,
+            Phonenumber : PhoneNumber,
+            Address : Address,
+        })
+        .then((res)=> {
+            alert("회원가입 완료");
+            console.log(res.data);
+            navigate('/SignUpDone')
+        })
     }
-
+};
+    
     return (
-        <div class="SignUp">
-          <form>
-              <div><input name="name" type="text" placeholder="이름" value={name} onChange={onNameHandler} class="loginregister__input"/></div>
-              <div><input name="email" type="email" placeholder="이메일" value={email} onChange={onEmailHandler} class="loginregister__input"/></div>
-              <div><input name="password" type="password" placeholder="비밀번호" value={password} onChange={onPasswordHandler} class="loginregister__input"/></div>
-              <div><input name="confirmPassword" type="password" placeholder="비밀번호 확인" value={confirmPassword} onChange={onConfirmPasswordHandler} class="loginregister__input"/></div>
-              <div><input name="email" type="phonenumber" placeholder="휴대폰번호" value={phoneNumber} onChange={onPhoneNumberHandler} class="loginregister__input"/></div>
-              <div><input name="email" type="address" placeholder="주소" value={address} onChange={onAdressHandler} class="loginregister__input"/></div>
-
-              <div><button type="submit" onSubmit={onSubmitHandler} class="signUp_button">계정 생성하기</button></div>
-          </form>
+            <div style={{ 
+            display: 'flex', justifyContent: 'center', alignItems: 'center', 
+            width: '100%', height: '100vh'
+            }}>
+            <form style={{ display: 'flex', flexDirection: 'column'}}
+                onSubmit={onSubmitHandler}
+            >
+          
+                <label>Email</label>
+                <input type='email' value={Email} onChange={onEmailHandler}/>
+                <label>Name</label>
+                <input type='text' value={Name} onChange={onNameHandler}/>
+                <label>Password</label>
+                <input type='password' value={Password} onChange={onPasswordHandler}/>
+                <label>Confirm Password</label>
+                <input type='password' value={ConfirmPassword} onChange={onConfirmPasswordHandler}/>
+                <label>PhoneNumber</label>
+                <input type='phonenumber' value={PhoneNumber} onChange={onPhoneNumberHandler}/>
+                <label>Address</label>
+                <input type='address' value={Address} onChange={onAddressHandler}/>
+                <br />
+                <button onClick = {(event)=> {
+                    onSubmitHandler(event);
+                }}
+                >
+                    회원가입
+                </button>
+            </form>
         </div>
-    );
+    )
+
 }
 export default SignUp;
 

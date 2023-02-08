@@ -1,15 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import Login from './routes/Login';
+import {Navigate} from "react-router-dom";
 
-
-export function Logout() {
+export default function Logout() {
     const onClickHandler = () => {
 
-        axios.get(`/api/users/logout`)
+        axios.get(`/api/v1/auth/logout`)
         .then((res)=> {
             if(res.data.success) {
-                Navigate("/login");
+                Navigate("/");
             }else {
                 alert("로그아웃 실패")
             }   

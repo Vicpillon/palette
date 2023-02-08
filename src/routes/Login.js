@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // 백엔드 데이터를 axios를 통해서 전달받음
 import axios from "axios";
+// import { useDispatch } from 'react-redux';
 
-const User = {
-  "email":"admin@admin.com",
-  "password":"adminadmin"
-}
-
-function Login() {
+export default function Login() {
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 이메일이나 비밀번호가 없으면 회원가입 요청하기
-  const goToMain = () => {
+  const goToMain = (values) => {
     if (email.includes("@") && password.length >= 5) {
       navigate("/main");
     } else {
@@ -20,13 +17,13 @@ function Login() {
     }
   };
 
+
+
   // 버튼 구현
   const [active, setActive] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log(email);
-  console.log(password);
 
   const ActiveIsPassedLogin = () => {
     return email.includes("@") && password.length >= 5
@@ -46,24 +43,21 @@ function Login() {
   // 더 추가할 것
   const onClickLoginButton = async (event) => {
     const authResult = await axios
-      .post("/api/login", { email, password })
+      .post("/api/v1/auth/login", { email, password })
       .then((res) => res.data)
       .catch((err) => null);
 
     if (!authResult || !authResult.success) {
       alert("로그인 실패");
     }
-
-    if ("success" in authResult && authResult.success) {
+    else if ("success" in authResult && authResult.success) {
       goToMain();
     }
   };
 
-  };
-
   return (
     <>
-      <section className="login">
+      <section className="Login">
         <form action="" method="post" className="loginForm">
           <h1>Shopping Mall</h1>
           {/*  */}
@@ -104,6 +98,5 @@ function Login() {
       </section>
     </>
   );
+};
 
-
-export default Login;
