@@ -17,7 +17,6 @@ async function create() {
 
   console.log("express application을 초기화합니다.");
   const expressApp = express();
-
   expressApp.use(express.json());
   expressApp.use(express.urlencoded({ extended: false }));
 

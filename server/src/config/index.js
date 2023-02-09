@@ -27,7 +27,7 @@ if (process.env.MONGODB_URI === undefined) {
 module.exports = {
   applicationName: process.env.APPLICATION_NAME || "app",
 
-  port: parseInt(process.env.PORT ?? "3000", 10),
+  port: parseInt(process.env.PORT ?? "3001", 10),
 
   mongoDBUri: process.env.MONGODB_URI,
 };
