@@ -92,7 +92,7 @@ const checkUserFrom = (from) => async (req, res, next) => {
   next();
 };
 
-// 관리자 검증
+// 관리자 검증 / 관리자가 아니면 접근 금지
 const verifyAdmin = (req, res, next) => {
   const decode_token = jwt_decode(req.cookies.token);
   const { role } = decode_token;
@@ -134,6 +134,7 @@ const existsToken = (req, res, next) => {
   next();
 };
 
+// 관리자 검증 / 내가 관리자라면 수정과 삭제 불가능
 const preventAdmin = (req, res, next) => {
   const decode_token = jwt_decode(req.cookies.token);
   const { role } = decode_token;
@@ -149,6 +150,7 @@ const preventAdmin = (req, res, next) => {
   next();
 };
 
+// 관리자 검증 / params로 받은 id가 관리자id라면 수정과 삭제 불가능
 const prohibitModifyAdmin = (from) => async (req, res, next) => {
   const { userId } = req[from];
   const data = await User.findOne({ _id: userId });
