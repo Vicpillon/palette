@@ -1,4 +1,4 @@
-const { categoryService } = require("../service");
+const { categoryService, productService } = require("../service");
 const util = require("../misc/util");
 
 const categoryController = {
@@ -54,7 +54,35 @@ const categoryController = {
     try {
       const { id } = req.params;
       const category = await categoryService.deleteCategory(id);
-      res.json(util.buildResponse(category));
+      res.status(201).json(util.buildResponse({
+        status: 201,
+        category
+      }));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getProductsInCategory(req, res, next) {
+    try {
+      //페이지 번호
+      const page = Number(req.query.page || 1);
+      //페이지 당 상품 개수
+      const perPage = Number(req.query.perPage || 10);
+
+      const { category } = req.params;
+      const { products, total, totalPage } = await productService.getProducts(
+        { category: category },
+        page,
+        perPage
+      )
+      res.json(util.buildResponse({
+        page: page,
+        perPage: perPage,
+        totalPage: totalPage, 
+        productCount: total,
+        products
+      }));
     } catch (error) {
       next(error);
     }

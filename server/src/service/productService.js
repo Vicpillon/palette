@@ -1,25 +1,17 @@
 const { productDAO } = require("../data-access");
 
 const productService = {
-  async createProduct({
-    name,
-    price,
-    summary,
-    description,
-    company,
-    category,
-    remaining,
-    image,
-  }) {
+  async createProduct({ name, price, summary, description, company, category, remaining, image, detailImage }) {
     const createdProduct = await productDAO.create({
-      name,
-      price,
-      summary,
-      description,
-      company,
+      name, 
+      price, 
+      summary, 
+      description, 
+      company, 
       category,
-      remaining,
+      remaining, 
       image,
+      detailImage
     });
     return createdProduct;
   },
@@ -29,43 +21,18 @@ const productService = {
     return product;
   },
 
-  async getProducts({
-    name,
-    price,
-    summary,
-    description,
-    company,
-    category,
-    remaining,
-    image,
-  }) {
-    const products = await postDAO.findMany({
-      name,
-      price,
-      summary,
-      description,
-      company,
-      category,
-      remaining,
-      image,
-    });
+  async getProducts({ name, price, summary, description, company, category, remaining, image, detailImage }, page, perPage) {
+    const products = await productDAO.findMany({ name, price, summary, description, company, category, remaining, image, detailImage }, page, perPage);
     return products;
   },
 
-  async updateProduct(
-    id,
-    { name, price, summary, description, company, category, remaining, image }
-  ) {
-    const updatedProduct = await productDAO.updateOne(id, {
-      name,
-      price,
-      summary,
-      description,
-      company,
-      category,
-      remaining,
-      image,
-    });
+  async getAllProducts(page, perPage) {
+    const products = await productDAO.findAll(page, perPage);
+    return products;
+  },
+
+  async updateProduct(id, { name, price, summary, description, company, category, remaining, image, detailImage }) {
+    const updatedProduct = await productDAO.updateOne(id, { name, price, summary, description, company, category, remaining, image, detailImage });
     return updatedProduct;
   },
 
@@ -74,26 +41,8 @@ const productService = {
     return deletedPost;
   },
 
-  async deleteProducts({
-    name,
-    price,
-    summary,
-    description,
-    company,
-    category,
-    remaining,
-    image,
-  }) {
-    const deletedProducts = await productDAO.deleteMany({
-      name,
-      price,
-      summary,
-      description,
-      company,
-      category,
-      remaining,
-      image,
-    });
+  async deleteProducts({ name, price, summary, description, company, category, remaining, image, detailImage }) {
+    const deletedProducts = await productDAO.deleteMany({ name, price, summary, description, company, category, remaining, image, detailImage });
     return deletedProducts;
   },
 };
