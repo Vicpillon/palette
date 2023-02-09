@@ -28,12 +28,19 @@ adminRouter.delete(
 );
 
 // 주문 관련 기능
-// 관리자 - 사용자 주문 정보 조회
-adminRouter.get("/orders", orderController.getOrderAdmin);
+// 관리자 - 전체 주문 내역 조회
+adminRouter.get(
+  "/orders",
+  userMiddleware.verifyUser,
+  userMiddleware.verifyAdmin,
+  orderController.getAllAdmin
+);
 
 // 관리자 - 사용자 배송 상태 수정
 adminRouter.put(
   "/orders/:id",
+  userMiddleware.verifyUser,
+  userMiddleware.verifyAdmin,
   orderMiddleware.checkOrderIdFrom("params"),
   orderMiddleware.checkAdminOrderConditionFrom("body"),
   orderController.putOrderAdmin
@@ -42,6 +49,8 @@ adminRouter.put(
 // 관리자 - 사용자 주문 삭제
 adminRouter.delete(
   "/orders/:id",
+  userMiddleware.verifyUser,
+  userMiddleware.verifyAdmin,
   orderMiddleware.checkOrderIdFrom("params"),
   orderController.deleteOrderAdmin
 );

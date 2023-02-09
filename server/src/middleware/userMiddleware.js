@@ -119,7 +119,7 @@ const verifyUser = (req, res, next) => {
       new AppError(
         commonErrors.jsonWebTokenError,
         401,
-        `JWT 토큰이 만료되었거나 없습니다.`
+        `JWT 토큰이 만료되었거나 없습니다.` // 로그인 10분이 지났음
       )
     );
   }
