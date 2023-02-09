@@ -3,14 +3,14 @@ const commonErrors = require("../misc/commonErrors");
 const productService = require("../service/productService");
 const Joi = require("joi");
 
+const schema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().required(),
+  image: Joi.string().required(),
+});
+
 const checkCompleteCategoryFrom = (form) => async (req, res, next) => {
   const { title, description, image } = req[form];
-
-  const schema = Joi.object({
-    title: Joi.string().required(),
-    description: Joi.string().max(100).required(),
-    image: Joi.string().required(),
-  });
 
   try {
     await schema.validateAsync({
@@ -31,6 +31,7 @@ const checkCompleteCategoryFrom = (form) => async (req, res, next) => {
       )
     );
   }
+  next();
 };
 
 const checkCategoryIdFrom = (from) => (req, res, next) => {
@@ -44,24 +45,41 @@ const checkCategoryIdFrom = (from) => (req, res, next) => {
   next();
 };
 
+const checkMinCategoryConditionFrom = (from) => (req, res, next) => {
+    const { title, description, image } = req[from];
+  
+    if (title === undefined && description === undefined && image === undefined) {
+      next(
+        new AppError(
+          commonErrors.inputError,
+          400,
+          `${from}: 값이 최소 하나는 필요합니다.`
+        )
+      );
+    }
+    next();
+  };
+
 //삭제하려는 카테고리 내 상품이 존재할 경우, 포함된 상품을 모두 삭제하거나 카테고리를 변경해야 한다.
 const checkRemainedProduct = (form) => async (req, res, next) => {
   const { title } = req[form];
-  try {
-    const products = productService.getProducts({ category: title });
-    if (products) {
-    }
-  } catch (error) {
-    new AppError(
-      commonErrors.inputError,
-      400,
-      `삭제하려는 카테고리에 포함된 상품이 존재합니다.`
+
+  const products = productService.getProducts({ category: title });
+  if (products.name) {
+    next(
+      new AppError(
+        commonErrors.inputError,
+        400,
+        `삭제하려는 카테고리에 포함된 상품이 존재합니다.`
+      )
     );
   }
+  next();
 };
 
 module.exports = {
   checkCompleteCategoryFrom,
   checkCategoryIdFrom,
+  checkMinCategoryConditionFrom,
   checkRemainedProduct,
 };

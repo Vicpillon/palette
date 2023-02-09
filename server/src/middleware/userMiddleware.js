@@ -3,16 +3,16 @@ const commonErrors = require("../misc/commonErrors");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
+const { User } = require("../data-access/model");
 
 // 회원가입 스키마
 const signInSchema = Joi.object({
   email: Joi.string()
     .pattern(
       new RegExp(
-        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-zA-Z]{2,3}$"
+        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-z]{2,3}$"
       )
     )
-    // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required(),
   password: Joi.string()
     .pattern(
@@ -31,10 +31,9 @@ const loginSchema = Joi.object({
   email: Joi.string()
     .pattern(
       new RegExp(
-        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-zA-Z]{2,3}$"
+        "^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*[.][a-z]{2,3}$"
       )
     )
-    // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required(),
   password: Joi.string()
     .pattern(
@@ -93,7 +92,7 @@ const checkUserFrom = (from) => async (req, res, next) => {
   next();
 };
 
-// 관리자 검증
+// 관리자 검증 / 관리자가 아니면 접근 금지
 const verifyAdmin = (req, res, next) => {
   const decode_token = jwt_decode(req.cookies.token);
   const { role } = decode_token;
@@ -135,10 +134,44 @@ const existsToken = (req, res, next) => {
   next();
 };
 
+// 관리자 검증 / 내가 관리자라면 수정과 삭제 불가능
+const preventAdmin = (req, res, next) => {
+  const decode_token = jwt_decode(req.cookies.token);
+  const { role } = decode_token;
+  if (role) {
+    next(
+      new AppError(
+        commonErrors.authenticationError,
+        400,
+        `관리자 계정은 수정 혹은 삭제할 수 없습니다.`
+      )
+    );
+  }
+  next();
+};
+
+// 관리자 검증 / params로 받은 id가 관리자id라면 수정과 삭제 불가능
+const prohibitModifyAdmin = (from) => async (req, res, next) => {
+  const { userId } = req[from];
+  const data = await User.findOne({ _id: userId });
+  if (data.email === "admin@admin.com") {
+    next(
+      new AppError(
+        commonErrors.authenticationError,
+        400,
+        `관리자 계정은 수정 혹은 삭제할 수 없습니다.`
+      )
+    );
+  }
+  next();
+};
+
 module.exports = {
   checkCompleteUserFrom,
   checkUserFrom,
   verifyAdmin,
   verifyUser,
   existsToken,
+  preventAdmin,
+  prohibitModifyAdmin,
 };
