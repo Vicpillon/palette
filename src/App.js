@@ -1,48 +1,35 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Main from "./routes/Main";
 import Login from "./routes/Login";
 import Logout from "./routes/Logout";
 import SignUp from "./routes/SignUp";
 import SignUpDone from "./routes/SignUpDone";
 import Category from "./components/Category";
-import { Nav,Container } from "react-bootstrap";
 
-import { BrowserRouter as Router,Routes,Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+// import AppLayout from "./common/AppLayout";
+import ProductPage from "./routes/Product";
+import AppNotFound from "./common/AppNotFound";
 
+const AppLayout = lazy(() => import("./common/AppLayout"));
 function App() {
-  const navigate = useNavigate();
-
   return (
-    <Container>
-      <header> 
-
-        <Nav.Link onClick = {() => {
-          navigate("/Login")
-        }}>
-          로그인
-        </Nav.Link>
-        <Nav.Link onClick = {() => {
-          navigate("/Logout")
-        }}>
-          로그아웃
-        </Nav.Link>
-        <Nav.Link onClick = {() => {
-          navigate("/SignUp")
-        }}>
-          회원가입
-        </Nav.Link>
-
-      </header>
-      <Routes>
-          <Route path='/' element={<App />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/signupdone' element={<SignUpDone />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/logout' element={<Logout />} />
-          <Route path='/category' element={<Category />} />
-      </Routes>
-
-    </Container>
+    <div>
+      <Suspense fallback={<h1>페이지 로딩중...</h1>}>
+        <AppLayout>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signupdone" element={<SignUpDone />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/category" element={<Category />} />
+            <Route path="/prod" element={<ProductPage />} />
+            <Route path="/*" element={<AppNotFound />} />
+          </Routes>
+        </AppLayout>
+      </Suspense>
+    </div>
   );
 }
 

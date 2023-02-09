@@ -1,3 +1,3 @@
-"javascript.validation.enabled" : false,
-
-// 유효성 검사 오류 코드 잡는 파일 "Type annotations can only be used in TypeScript files." 이라는 오류 발생하여 추가된 파일.
+{
+  "javascript.validation.enabled": false
+}

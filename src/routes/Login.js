@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // 백엔드 데이터를 axios를 통해서 전달받음
+// import {customAxios} from "../config/customAxios";
+import { Regex } from "../components/Regex";
 import axios from "axios";
-// import { useDispatch } from 'react-redux';
+import { useSetRecoilState } from "recoil";
+import { authStatusAtom } from "../recoil/atoms/authStatus.atom";
 
 export default function Login() {
+  const setAuthStatus = useSetRecoilState(authStatusAtom);
   const navigate = useNavigate();
 
   // 이메일이나 비밀번호가 없으면 회원가입 요청하기
@@ -16,7 +20,9 @@ export default function Login() {
     }
   };
 
-
+  //이메일,비밀번호 검사
+  const [emailCheck, setEmailCheck] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
 
   // 버튼 구현
   const [active, setActive] = useState(false);
@@ -32,26 +38,42 @@ export default function Login() {
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
+    if (Regex(event.target.value)) {
+      setEmailCheck(true);
+    } else {
+      setEmailCheck(false);
+    }
   };
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
+    if (Regex(event.target.value)) {
+      setPasswordCheck(true);
+    } else {
+      setPasswordCheck(false);
+    }
   };
 
   // await async 사용하여 백엔드와 데이터 주고받아서 로그인 처라하기
   // 더 추가할 것
   const onClickLoginButton = async (event) => {
-    const authResult = await axios
-      .post("/api/v1/auth/login", { email, password })
-      .then((res) => res.data)
-      .catch((err) => null);
-
-    if (!authResult || !authResult.success) {
-      alert("로그인 실패");
-    }
-    else if ("success" in authResult && authResult.success) {
-      goToMain();
-    }
+    await axios
+      .post("http://localhost:8000/api/v1/auth/login", { email, password })
+      .then((res) => {
+        const result = res.data;
+        if (!result.error) {
+          const { token, isAdmin } = result.data;
+          localStorage.setItem("token", token);
+          setAuthStatus((prev) => ({ ...prev, isAdmin, isLogin: true }));
+          navigate("/");
+        } else {
+          alert("로그인 실패, 다시 시도해주세요.");
+        }
+      })
+      .catch((err) => {
+        alert("(!) 네트워크 오류, 새로고침 후 다시 시도해주세요.");
+        console.log({ err });
+      });
   };
 
   return (
@@ -97,4 +119,4 @@ export default function Login() {
       </section>
     </>
   );
-};
+}
