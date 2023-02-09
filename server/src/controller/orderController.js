@@ -30,21 +30,21 @@ const orderController = {
       next(error);
     }
   },
-  // 관리자 - 전체 주문 내역 조회
-  async getAllAdmin(req, res, next) {
-    try {
-      const file = await orderService.getAllOrder();
-      res.status(201).json(util.buildResponse(file));
-    } catch (error) {
-      next(error);
-    }
-  },
   // 사용자 주문 수정
   async putOrderUser(req, res, next) {
     try {
       const { id } = req.params;
       const { address } = req.body;
       const file = await orderService.updateOrder({ id }, { address });
+      res.status(201).json(util.buildResponse(file));
+    } catch (error) {
+      next(error);
+    }
+  },
+  // 관리자 - 전체 주문 내역 조회
+  async getAllAdmin(req, res, next) {
+    try {
+      const file = await orderService.getAllOrder();
       res.status(201).json(util.buildResponse(file));
     } catch (error) {
       next(error);

@@ -44,36 +44,18 @@ const orderDAO = {
     console.log(order);
     return order;
   },
-  // async updateOne(id, { address }) {
-  //   const order = await Order.findByIdAndUpdate(id, { address: address });
-  //   console.log(order);
-  //   return order;
-  // },
-  // 관리자 - 사용자 배송 상태 수정
-  async updateStatus({ id }, { status }) {
-    const updateStatus = await Order.findOneAndUpdate(
-      { _id: id },
-      {
-        status: status,
-      },
-      { new: true }
-    );
-    return updateStatus;
-  },
-  // async updateStatus(id, { status }) {
-  //   const updateStatus = await Order.findByIdAndUpdate(
-  //     id,
-  //     {
-  //       status: status,
-  //     },
-  //     { new: true }
-  //   );
-  //   return updateStatus;
-  // },
   // 관리자 - 전체 주문 내역 조회
   async find({}) {
     const orders = await Order.find({});
     return orders;
+  },
+  // 관리자 - 사용자 배송 상태 수정
+  async updateStatus({ id }, { status }) {
+    const updateStatus = await Order.findOneAndUpdate(
+      { _id: id },
+      { status: status }
+    );
+    return updateStatus;
   },
   //사용자 주문 삭제
   async deleteOne({ id }) {

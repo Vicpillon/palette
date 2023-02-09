@@ -22,7 +22,7 @@ const checkUserConditionSchema = Joi.object({
 
 // checkAdminCondition 스키마
 const checkAdminConditionSchema = Joi.object({
-  status: Joi.string().required(),
+  status: Joi.string().default("배송준비중").required(),
 });
 
 const checkCompleteOrderFrom = (from) => async (req, res, next) => {
@@ -58,7 +58,7 @@ const checkOrderIdFrom = (from) => async (req, res, next) => {
     });
   } catch (error) {
     next(
-      new AppError(commonErrors.inputError, 400`${from}: id는 필수값입니다.`)
+      new AppError(commonErrors.inputError, 400, `${from}: id는 필수값입니다.`)
     );
   }
   next();
@@ -91,11 +91,11 @@ const checkStatus = (from) => async (req, res, next) => {
       new AppError(
         commonErrors.authenticationError,
         400,
-        `배송 준비중인 상품만 정보를 변경할 수 있습니다.                                 `
+        `${from}: 배송 준비중인 상품만 정보를 변경할 수 있습니다.`
       )
     );
-    next();
   }
+  next();
 };
 
 const checkAdminOrderConditionFrom = (from) => async (req, res, next) => {
