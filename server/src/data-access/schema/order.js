@@ -6,8 +6,9 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {
     productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "Product",
+      type: String,
       required: true,
     },
 
@@ -25,10 +26,6 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
     status: {
       type: String,
       default: "배송준비중",
@@ -38,6 +35,10 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    phoneNumber: {
+      type: String,
+      required: true,
+    }
   },
   {
     collection: "Order",
