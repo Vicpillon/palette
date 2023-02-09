@@ -74,7 +74,9 @@ const productDAO = {
   },
 
   async deleteOne(id) {
-    const plainDeletedProduct = await Product.findByIdAndDelete({ _id: id }).lean();
+    const plainDeletedProduct = await Product.findByIdAndDelete({
+      _id: id,
+    }).lean();
     return plainDeletedProduct;
   },
 
@@ -90,7 +92,9 @@ const productDAO = {
       image: condition.image,
       detailImage: condition.detailImage
     });
-    const plainDeletedProducts = await Product.deleteMany(sanitizedCondition).lean();
+    const plainDeletedProducts = await Product.deleteMany(
+      sanitizedCondition
+    ).lean();
     return plainDeletedProducts;
   },
 };

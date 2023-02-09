@@ -14,10 +14,10 @@
 
 //   try {
 //     await schema.validateAsync({
-//       productId, 
-//       userId, 
-//       totalPrice, 
-//       address, 
+//       productId,
+//       userId,
+//       totalPrice,
+//       address,
 //       status,
 //       quantity
 //     })
@@ -30,7 +30,6 @@
 //         new AppError(commonErrors.inputError, 400, `${result}: 유효한 데이터 셋이 아닙니다.`)
 //     )
 //   }
-
 
 // };
 

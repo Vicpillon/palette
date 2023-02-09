@@ -7,5 +7,5 @@ module.exports = {
   Product,
   Category,
   User,
-  Order
+  Order,
 };

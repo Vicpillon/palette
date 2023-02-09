@@ -9,7 +9,7 @@ const orderDAO = {
       totalPrice,
       address,
       status,
-      quantity
+      quantity,
     });
     await order.save();
     return order.toObject();
@@ -26,12 +26,15 @@ const orderDAO = {
   },
   // 관리자는 주문자의 배송상태 수정
   async updateOneAdmin(id, { address, productId, status }) {
-    const updatedOrder = await Order.findByIdAndUpdate(id, 
-      { address, productId, status }).lean();
+    const updatedOrder = await Order.findByIdAndUpdate(id, {
+      address,
+      productId,
+      status,
+    }).lean();
     return updatedOrder;
   },
   // 주문자는 배송 시작 전 주문정보 수정
-  async updateOne(id, { address } ) {
+  async updateOne(id, { address }) {
     const updatedOrder = await Order.findByIdAndUpdate(id, { address }).lean();
     return updatedOrder;
   },

@@ -1,22 +1,30 @@
 const { orderService } = require("../service");
-const util = require('../misc/util')
+const util = require("../misc/util");
 
 const orderController = {
   // 주문 생성
   async postOrder(req, res, next) {
     try {
-      const { productId, userId, totalPrice, address, phoneNumber, status, quantity } = req.body;
-      const order = await orderService.createOrder({ 
-        productId, 
-        userId, 
-        totalPrice, 
-        address, 
-        phoneNumber, 
-        status, 
-        quantity 
+      const {
+        productId,
+        userId,
+        totalPrice,
+        address,
+        phoneNumber,
+        status,
+        quantity,
+      } = req.body;
+      const order = await orderService.createOrder({
+        productId,
+        userId,
+        totalPrice,
+        address,
+        phoneNumber,
+        status,
+        quantity,
       });
       res.status(201).json(util.buildResponse(order));
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -56,7 +64,11 @@ const orderController = {
     try {
       const { id } = req.params;
       const { address, productId, status } = req.body;
-      const order = await orderService.updateOrderAdmin(id, { address, productId, status });
+      const order = await orderService.updateOrderAdmin(id, {
+        address,
+        productId,
+        status,
+      });
       res.json(util.buildResponse(order));
     } catch (error) {
       next(error);
@@ -73,7 +85,5 @@ const orderController = {
     }
   },
 };
-
-
 
 module.exports = orderController;

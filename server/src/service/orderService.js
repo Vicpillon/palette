@@ -2,7 +2,14 @@ const { orderDAO } = require("../data-access");
 
 const orderService = {
   // 주문 생성
-  async createOrder({ productId, userId, totalPrice, address, status, quantity }) {
+  async createOrder({
+    productId,
+    userId,
+    totalPrice,
+    address,
+    status,
+    quantity,
+  }) {
     const createdOrder = await orderDAO.create({
       productId,
       userId,
@@ -24,7 +31,7 @@ const orderService = {
     return orders;
   },
   // 주문자 배송지 수정
-  async updateOrder(id , { address }) {
+  async updateOrder(id, { address }) {
     const order = await orderDAO.findOne(id);
     if (order.status !== "배송준비중") {
       console.log("배송 준비중인 상태의 주문만 변경이 가능합니다.");
@@ -35,16 +42,18 @@ const orderService = {
   },
   // 관리자 주문상태 수정
   async updateOrderAdmin(id, { address, productId, status }) {
-    const updatedOrderAdmin = await orderDAO.updateOneAdmin(id,  
-      { address, productId, status });
-      return updatedOrderAdmin;
+    const updatedOrderAdmin = await orderDAO.updateOneAdmin(id, {
+      address,
+      productId,
+      status,
+    });
+    return updatedOrderAdmin;
   },
   // 주문 하나 취소
   async deleteOrder(id) {
     const deletedOrder = await orderDAO.deleteOne(id);
     return deletedOrder;
   },
-
 };
 
 module.exports = orderService;

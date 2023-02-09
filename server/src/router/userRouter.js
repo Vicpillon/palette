@@ -1,50 +1,33 @@
 const express = require("express");
 const { userController } = require("../controller");
 const { userMiddleware } = require("../middleware");
-const passport = require('passport');
-const { setUserToken } = require('../misc/util');
 
 const userRouter = express.Router();
 
-userRouter.post('/add',
+// 회원가입
+userRouter.post(
+  "/",
   userMiddleware.checkCompleteUserFrom("body"),
   userController.addUser
 );
 
-userRouter.post('/login', 
-  userMiddleware.checkUserFrom("body"),
-  userMiddleware.existsToken,
-  passport.authenticate('local'), (req, res, next) => 
-  {
-    setUserToken(res, req.user);
-    // res.redirect('/Landing');
-  }
-);
+// 사용자 정보 조회
+userRouter.get("/", userMiddleware.verifyUser, userController.configUser);
 
-userRouter.get('/logout', 
-  userController.logoutUser
-);
-
-userRouter.get('/config',
+// 사용자 정보 수정
+userRouter.put(
+  "/",
   userMiddleware.verifyUser,
-  userController.configUser
-);
-
-userRouter.put('/edit',
-  userMiddleware.verifyUser,
+  userMiddleware.preventAdmin,
   userController.editUser
 );
 
-userRouter.delete('/withdraw',
+// 사용자 정보 삭제
+userRouter.delete(
+  "/",
   userMiddleware.verifyUser,
+  userMiddleware.preventAdmin,
   userController.deleteUser
-);
-
-userRouter.get('/verify',
-  userMiddleware.verifyUser,
-  (req, res, next) => {
-    res.json(req.cookies.token)
-  }
 );
 
 module.exports = userRouter;

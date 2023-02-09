@@ -19,10 +19,10 @@ const checkCompleteProductFrom = (from) => async (req, res, next) => {
 
   try {
     await schema.validateAsync({
-      name, 
-      price, 
-      summary, 
-      description, 
+      name,
+      price,
+      summary,
+      description,
       company,
       category, 
       remaining, 
