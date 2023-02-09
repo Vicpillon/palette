@@ -1,18 +1,19 @@
 import axios from "axios";
-
 const customAxios = axios.create({});
 customAxios.defaults.headers.post["Content-Type"] = "application/json";
 customAxios.defaults.timeout = 5000;
-customAxios.defaults.baseURL = "http://localhost:8000";
-
 const getAuthToken = () => {
   return localStorage.getItem("token");
 };
 
 customAxios.interceptors.request.use(
   (req) => {
+    const token = getAuthToken() || "";
     if (req.headers) {
-      req.headers["Authorization"] = `Bearer ${getAuthToken()}`;
+      req.headers["Authorization"] = `Bearer ${token}`;
+      if (req.data instanceof FormData) {
+        req.headers["Content-Type"] = "multipart/form-data";
+      }
     }
     return req;
   },

@@ -58,7 +58,7 @@ export default function Login() {
   // 더 추가할 것
   const onClickLoginButton = async (event) => {
     await axios
-      .post("http://localhost:8000/api/v1/auth/login", { email, password })
+      .post("api/v1/auth/login", { email, password })
       .then((res) => {
         const result = res.data;
         if (!result.error) {
@@ -72,6 +72,8 @@ export default function Login() {
       })
       .catch((err) => {
         alert("(!) 네트워크 오류, 새로고침 후 다시 시도해주세요.");
+        // 백엔드 유저 세션 안끊겼을 때도 동일하게 이쪽 로직 실행.
+        axios.get("api/v1/auth/logout");
         console.log({ err });
       });
   };
@@ -81,7 +83,7 @@ export default function Login() {
       <section className="Login">
         <form action="" method="post" className="loginForm">
           <h1>Shopping Mall</h1>
-          {/*  */}
+
           <div className="emailForm">
             <input
               type="text"
