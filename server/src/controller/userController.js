@@ -20,7 +20,7 @@ const userController = {
       const hashedPassword = password
         ? bcrypt.hashSync(password, 10)
         : password;
-      await userService.editUser({
+      const user = await userService.editUser({
         _id: userId,
         email,
         name,
@@ -28,7 +28,6 @@ const userController = {
         address,
         phoneNumber,
       });
-      const user = await userService.configUser({ _id: userId });
       res.json(util.buildResponse(user));
     } catch (err) {
       next(err);
@@ -92,7 +91,7 @@ const userController = {
       const hashedPassword = password
         ? bcrypt.hashSync(password, 10)
         : password;
-      await userService.editUser({
+      const user = await userService.editUser({
         _id,
         email,
         name,
@@ -100,7 +99,6 @@ const userController = {
         address,
         phoneNumber,
       });
-      const user = await userService.configUser({ _id });
       res.json(util.buildResponse(user));
     } catch (err) {
       next(err);

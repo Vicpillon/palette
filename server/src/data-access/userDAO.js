@@ -36,7 +36,8 @@ const userDAO = {
         password: password,
         address: address,
         phoneNumber: phoneNumber,
-      }
+      },
+      { new: true }
     );
     return user;
   },
