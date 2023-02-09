@@ -35,29 +35,31 @@ const orderDAO = {
     console.log(order);
     return order;
   },
-  // 사용자 주문 내역 수정
-  async updateOne({ id }, { address }) {
-    const order = await Order.findOneAndUpdate(
-      { _id: id },
-      { address: address }
-    );
-    console.log(order);
-    return order;
-  },
   // 관리자 - 전체 주문 내역 조회
   async find({}) {
     const orders = await Order.find({});
     return orders;
   },
+  // 사용자 주문 내역 수정
+  async updateOne({ id }, { address }) {
+    const order = await Order.findOneAndUpdate(
+      { _id: id },
+      { address: address },
+      { new: true }
+    );
+    console.log(order);
+    return order;
+  },
   // 관리자 - 사용자 배송 상태 수정
   async updateStatus({ id }, { status }) {
     const updateStatus = await Order.findOneAndUpdate(
       { _id: id },
-      { status: status }
+      { status: status },
+      { new: true }
     );
     return updateStatus;
   },
-  //사용자 주문 삭제
+  // 주문 삭제
   async deleteOne({ id }) {
     const order = await Order.findOneAndDelete({ _id: id });
     return order;
