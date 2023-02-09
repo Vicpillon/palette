@@ -3,6 +3,7 @@ const express = require("express");
 const upload = require("../middleware/imageMiddleware");
 const imageRouter = express.Router();
 
+//단일 이미지 업로드
 imageRouter.post(
   "/image", 
   upload.single("image"), async (req, res) => {
@@ -18,6 +19,7 @@ imageRouter.post(
   }
 );
 
+//복수 이미지 업로드
 imageRouter.post(
   "/images", 
   upload.array("image"), async (req, res) => {
