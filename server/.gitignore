@@ -1,4 +1,4 @@
 #dotenv environment variables file
 .env
 node_modules
-s3.json
+s3.js
