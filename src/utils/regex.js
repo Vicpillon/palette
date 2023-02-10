@@ -1,4 +1,4 @@
-export const Regex = (props) => {
+export const regex = (props) => {
   const EmailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
   /* 8 ~ 15 자리 비번 &*/
   const PasswordRegex =

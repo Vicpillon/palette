@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // 백엔드 데이터를 axios를 통해서 전달받음
 // import {customAxios} from "../config/customAxios";
-import { Regex } from "../components/Regex";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { authStatusAtom } from "../recoil/atoms/authStatus.atom";
-
+import {regex} from "../utils/regex";
 export default function Login() {
   const setAuthStatus = useSetRecoilState(authStatusAtom);
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ export default function Login() {
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
-    if (Regex(event.target.value)) {
+    if (regex(event.target.value)) {
       setEmailCheck(true);
     } else {
       setEmailCheck(false);
@@ -47,7 +46,7 @@ export default function Login() {
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
-    if (Regex(event.target.value)) {
+    if (regex(event.target.value)) {
       setPasswordCheck(true);
     } else {
       setPasswordCheck(false);

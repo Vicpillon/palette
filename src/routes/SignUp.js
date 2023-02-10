@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 // import customAxios from "../../config/customAxios";
-import { Regex } from "../components/Regex";
+import { regex } from "../utils/regex";
 import axios from "axios";
 
 const SignUp = () => {
@@ -41,22 +41,22 @@ const SignUp = () => {
         e.preventDefault();
   
 
-    if(!Regex(Email)){
+    if(!regex(Email)){
         return alert("이메일 형식을 확인해주세요.")
-    }else if(!Regex(Password)){
+    }else if(!regex(Password)){
         return alert("비밀번호 형식을 확인해주세요.")
-    }else if(!Regex(ConfirmPassword)){
+    }else if(!regex(ConfirmPassword)){
         return alert("비밀번호가 틀립니다.")
-    }else if(!Regex(PhoneNumber)){
+    }else if(!regex(PhoneNumber)){
         return alert("휴대폰번호 형식을 확인해주세요.")
     }else{
         axios
-        .post("/signup",{
-            Name : Name,
-            Email : Email,
-            Password : Password,
-            Phonenumber : PhoneNumber,
-            Address : Address,
+        .post("/api/v1/users",{
+            name : Name,
+            email : Email,
+            password : Password,
+            phoneNumber : PhoneNumber,
+            address : Address,
         })
         .then((res)=> {
             alert("회원가입 완료");
