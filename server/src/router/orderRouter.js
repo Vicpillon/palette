@@ -1,35 +1,40 @@
 const express = require("express");
 const { orderController } = require("../controller");
-// const { orderMiddleware } = require("../middleware");
+const { userMiddleware, orderMiddleware } = require("../middleware");
 
 const orderRouter = express.Router();
 
-// 사용자 상품 주문
-orderRouter.post('/',
-  //orderMiddleware.checkCompleteOrderFrom("body"),
-  orderController.postOrder
+// 사용자 - 주문 추가
+orderRouter.post(
+  "/",
+  userMiddleware.verifyUser,
+  orderMiddleware.checkCompleteOrderFrom("body"),
+  orderController.postOrderUser
 );
 
-// 사용자 주문 정보 조회
-orderRouter.get('/:id',
-  //orderMiddleware.checkOrderIdFrom("params"), 
-  orderController.getOrder
+// 사용자 - 주문 내역 조회
+orderRouter.get(
+  "/",
+  userMiddleware.verifyUser,
+  orderController.getOrderUser
 );
 
-// 사용자 개별 주문정보 수정
-orderRouter.put("/:id", 
-  //orderMiddleware.checkOrderIdFrom("params"), 
-  //orderMiddleware.checkMinOrderConditionFrom("body"),
-  orderController.putOrder
+// 사용자 - 주문 수정
+orderRouter.put(
+  "/:id",
+  userMiddleware.verifyUser,
+  orderMiddleware.checkOrderIdFrom("params"),
+  orderMiddleware.checkUserOrderConditionFrom("body"),
+  orderMiddleware.checkStatus("params"),
+  orderController.putOrderUser
 );
 
-// 사용자 개별 주문정보 삭제
-orderRouter.delete("/:id", 
-  //orderMiddleware.checkOrderIdFrom("params"), 
-  orderController.deleteOrder
+// 사용자 - 주문 삭제
+orderRouter.delete(
+  "/:id",
+  userMiddleware.verifyUser,
+  orderMiddleware.checkOrderIdFrom("params"),
+  orderController.deleteOrderUser
 );
 
 module.exports = orderRouter;
-
-
-

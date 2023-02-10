@@ -7,5 +7,5 @@ module.exports = {
   productSchema,
   categorySchema,
   userSchema,
-  orderSchema
+  orderSchema,
 };
